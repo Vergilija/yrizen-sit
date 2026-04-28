@@ -3,35 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="yrizen — Профессиональный монтаж и визуал. Ваши видео будут завораживать.">
-    <title>yrizen — Видеомейкер</title>
-    
-    <link rel="preload" href="https://klageportfolio.com/assets/fonts/Involve.woff2" as="font" type="font/woff2" crossorigin>
+    <title>Заказать монтаж видео</title>
+    <meta name="description" content="Заказать монтаж видео у Александра: вертикальные и горизонтальные ролики, интервью, путешествия, говорящая голова и монтаж по записи голоса.">
+    <meta name="keywords" content="заказать монтаж видео, видеомонтаж, монтаж reels, монтаж shorts, монтаж youtube, монтаж интервью, монтаж путешествий, монтаж говорящей головы">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Заказать монтаж видео">
+    <meta property="og:description" content="Профессиональный монтаж всех видов контента: вертикальные и горизонтальные ролики, интервью, путешествия и говорящая голова.">
+    <meta property="og:locale" content="ru_RU">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="yandex-verification" content="pending">
+    <link rel="canonical" href="https://montage-yrizen.ru/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@300&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "ProfessionalService",
+            "name": "YRIZEN",
+            "url": "https://montage-yrizen.ru/",
+            "description": "Услуги по монтажу вертикальных и горизонтальных видео, интервью, путешествий и говорящей головы.",
+            "serviceType": "Видеомонтаж",
+            "areaServed": "RU, Worldwide",
+            "email": "yrizen.alex@gmail.com",
+            "sameAs": ["https://t.me/yrizen0"]
+        }
+    </script>
 </head>
 <body>
-    <div class="noise-overlay"></div>
+    <div class="noise-overlay" aria-hidden="true"></div>
 
     <header class="header" id="header">
         <div class="container">
             <div class="header-inner">
-                <a href="#" class="logo">yrizen</a>
-                <nav class="nav">
-                    <div class="nav-menu" id="nav-menu">
-                        <a href="#work" class="nav-link">Работы</a>
-                        <a href="#results" class="nav-link">Результаты</a>
-                        <a href="#about" class="nav-link">Обо мне</a>
-                    </div>
-                    <a href="#" class="nav-link lang-switch">EN</a>
+                <a href="#" class="logo">YRIZEN</a>
+                <nav class="nav-menu" id="nav-menu">
+                    <a href="#hero" class="nav-link">Главная</a>
+                    <a href="#horizontal" class="nav-link">Горизонтальные</a>
+                    <a href="#vertical" class="nav-link">Вертикальные</a>
+                    <a href="#about" class="nav-link">Обо мне</a>
+                    <a href="#contact" class="nav-link">Связь</a>
                 </nav>
-                <div class="header-right">
-                    <a href="https://t.me/yrizen0" target="_blank" rel="noopener noreferrer" class="btn btn-accent">Связаться</a>
-                </div>
-                <button class="burger-menu" id="burger-menu">
+                <button class="burger-menu" id="burger-menu" aria-label="Открыть меню" aria-expanded="false">
                     <span></span>
                     <span></span>
                 </button>
@@ -40,167 +55,155 @@
     </header>
 
     <main>
-        <section class="hero">
+        <section class="hero" id="hero">
             <div class="container hero-content">
-                <h1 class="htitle">
-                    <span class="hsup">монтаж • контент • визуал</span>
-                    <span class="hhand">ваши видео будут</span>
-                    <span class="gw-ice-wrap">
-                        <span class="ice ice--1" aria-hidden="true"></span>
-                        <span class="ice ice--2" aria-hidden="true"></span>
-                        <span class="ice ice--4" aria-hidden="true"></span>
-                        <span class="ice ice--6" aria-hidden="true"></span>
-                        <span class="ice ice--7" aria-hidden="true"></span>
-                        <span class="gw-container">
-                            <span class="gw-blur" aria-hidden="true">ЗАВОРАЖИВАТЬ</span>
-                            <span class="gw-sharp" aria-hidden="true">ЗАВОРАЖИВАТЬ</span>
-                            <span class="gw-text">ЗАВОРАЖИВАТЬ</span>
-                        </span>
-                    </span>
+                <p class="hero-kicker reveal">монтаж • контент • визуал</p>
+                <h1 class="hero-title reveal">
+                    Помогаю контенту
+                    <span>выглядеть дороже и продвигаться быстрее</span>
                 </h1>
-                <p class="desc fade-in">
-                    Создаю выдающийся и уникальный визуал, который запоминается<br>
-                    и помогает выйти на новый уровень брендам по всему миру.
+                <p class="hero-description reveal">
+                    Монтирую вертикальные и горизонтальные видео: интервью, путешествия, talking head,
+                    экспертные ролики и проекты, где есть только запись голоса.
                 </p>
-                <div class="hero-buttons fade-in">
-                    <a href="https://t.me/yrizen0" target="_blank" rel="noopener noreferrer" class="btn btn-accent">
-                        <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/></svg>
-                        Написать в Telegram
-                    </a>
-                    <a href="mailto:hello@yrizen.com" class="btn btn-dark">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                        Написать Email
-                    </a>
+                <div class="hero-buttons reveal">
+                    <a href="#horizontal" class="btn btn-accent">Горизонтальные</a>
+                    <a href="#vertical" class="btn btn-secondary">Вертикальные</a>
                 </div>
             </div>
-            <div class="scroll-indicator fade-in">
-                <span>ЛИСТАЙ</span>
-                <div class="line"></div>
-            </div>
+            <a class="scroll-indicator reveal" href="#horizontal">
+                <span>работы</span>
+                <span class="arrow-down" aria-hidden="true"></span>
+            </a>
         </section>
 
-        <section id="work" class="section">
+        <section class="section" id="horizontal">
             <div class="container">
-                <h2 class="section-title fade-in">Портфолио <br><span>Горизонтальные видео</span></h2>
-                <div class="video-grid horizontal">
-                    <article class="glass-card video-card fade-in" data-video-key="showreel1" data-video-stem="showreel-1">
+                <h2 class="section-title reveal">Портфолио <span>Горизонтальные видео</span></h2>
+                <div class="video-grid horizontal-grid">
+                    <article class="video-card reveal" data-video-type="horizontal" data-video-id="h1">
                         <div class="video-shell">
-                            <video class="portfolio-video" playsinline preload="none" controls></video>
+                            <video class="portfolio-video" playsinline preload="metadata" controls></video>
                         </div>
-                        <p class="video-label">Шоурил / YouTube 1</p>
+                        <p class="video-label">Горизонтальный кейс 1</p>
                     </article>
-                    <article class="glass-card video-card fade-in" data-video-key="showreel2" data-video-stem="showreel-2">
+                    <article class="video-card reveal" data-video-type="horizontal" data-video-id="h2">
                         <div class="video-shell">
-                            <video class="portfolio-video" playsinline preload="none" controls></video>
+                            <video class="portfolio-video" playsinline preload="metadata" controls></video>
                         </div>
-                        <p class="video-label">Шоурил / YouTube 2</p>
-                    </article>
-                </div>
-                
-                <h2 class="section-title fade-in">Портфолио <br><span>Вертикальные работы</span></h2>
-                <div class="video-grid vertical">
-                    <article class="glass-card video-card fade-in" data-video-key="reels1" data-video-stem="reels-1">
-                        <div class="video-shell">
-                            <video class="portfolio-video" playsinline preload="none" controls></video>
-                        </div>
-                        <p class="video-label">Reels 1</p>
-                    </article>
-                    <article class="glass-card video-card fade-in" data-video-key="reels2" data-video-stem="reels-2">
-                        <div class="video-shell">
-                            <video class="portfolio-video" playsinline preload="none" controls></video>
-                        </div>
-                        <p class="video-label">Reels 2</p>
-                    </article>
-                    <article class="glass-card video-card fade-in" data-video-key="reels3" data-video-stem="reels-3">
-                        <div class="video-shell">
-                            <video class="portfolio-video" playsinline preload="none" controls></video>
-                        </div>
-                        <p class="video-label">Reels 3</p>
-                    </article>
-                    <article class="glass-card video-card fade-in" data-video-key="reels4" data-video-stem="reels-4">
-                        <div class="video-shell">
-                            <video class="portfolio-video" playsinline preload="none" controls></video>
-                        </div>
-                        <p class="video-label">Reels 4</p>
+                        <p class="video-label">Горизонтальный кейс 2</p>
                     </article>
                 </div>
             </div>
         </section>
 
-        <section id="about" class="section">
+        <section class="section" id="vertical">
             <div class="container">
-                <h2 class="section-title fade-in">Обо мне <br><span>Кто стоит за кадром</span></h2>
-                <div class="glass-card about-card fade-in">
-                    <div class="about-photo">Фото</div>
+                <h2 class="section-title reveal">Портфолио <span>Вертикальные видео</span></h2>
+                <div class="video-grid vertical-grid">
+                    <article class="video-card reveal" data-video-type="vertical" data-video-id="v1">
+                        <div class="video-shell">
+                            <video class="portfolio-video" playsinline preload="metadata" controls></video>
+                        </div>
+                        <p class="video-label">Вертикальный кейс 1</p>
+                    </article>
+                    <article class="video-card reveal" data-video-type="vertical" data-video-id="v2">
+                        <div class="video-shell">
+                            <video class="portfolio-video" playsinline preload="metadata" controls></video>
+                        </div>
+                        <p class="video-label">Вертикальный кейс 2</p>
+                    </article>
+                    <article class="video-card reveal" data-video-type="vertical" data-video-id="v3">
+                        <div class="video-shell">
+                            <video class="portfolio-video" playsinline preload="metadata" controls></video>
+                        </div>
+                        <p class="video-label">Вертикальный кейс 3</p>
+                    </article>
+                    <article class="video-card reveal" data-video-type="vertical" data-video-id="v4">
+                        <div class="video-shell">
+                            <video class="portfolio-video" playsinline preload="metadata" controls></video>
+                        </div>
+                        <p class="video-label">Вертикальный кейс 4</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="about">
+            <div class="container">
+                <h2 class="section-title reveal">Обо мне <span>Кто стоит за кадром</span></h2>
+                <article class="about-card reveal">
                     <div class="about-text">
-                        <h3>Привет, я yrizen</h3>
-                        <p>Я профессиональный видеомейкер. Моя миссия — не просто склеивать кадры, а создавать истории, которые захватывают дух.</p>
-                        <p>Я использую кинематографичный подход, трендовый саунд-дизайн и глубокую цветокоррекцию для брендов по всему миру.</p>
+                        <h3>Привет, я Александр</h3>
+                        <p>
+                            Занимаюсь созданием логичных и структурированных видео, где каждый элемент помогает раскрыть основную идею.
+                            В работе опираюсь на темп и ритм, визуальную чистоту и содержательность кадров, чтобы готовый материал вызывал
+                            отклик и оставался в памяти.
+                        </p>
+                        <p>
+                            Видеомонтаж для меня — это не просто выполнение задач, а по-настоящему близкое увлечение, переросшее
+                            в любимое дело. Именно поэтому я глубоко погружаюсь в нюансы каждого заказа и искренне стараюсь подготовить
+                            качественный результат, который оправдает ваши ожидания.
+                        </p>
+                        <ul class="about-tags">
+                            <li>Монтаж Reels / Shorts</li>
+                            <li>YouTube и интервью</li>
+                            <li>Цвет и ритм</li>
+                            <li>Контент для брендов</li>
+                        </ul>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="results" class="section">
-            <div class="container">
-                <h2 class="section-title fade-in">Отзывы <br><span>Что говорят клиенты</span></h2>
-                <div class="reviews-grid">
-                    <div class="glass-card review-card fade-in">
-                        <div class="review-header">
-                            <div class="avatar"></div>
-                            <div><h4>Иван Иванов</h4><span>Блогер, 1.2M подп.</span></div>
-                        </div>
-                        <p>"Это просто отвал башки. Картинка сочная, удержание выросло, аудитория в восторге."</p>
-                    </div>
-                    <div class="glass-card review-card fade-in">
-                        <div class="review-header">
-                            <div class="avatar"></div>
-                            <div><h4>Анна Смирнова</h4><span>Бренд одежды</span></div>
-                        </div>
-                        <p>"Сделали рекламный креатив, который окупил себя в 10 раз за первую неделю."</p>
-                    </div>
-                </div>
+                </article>
             </div>
         </section>
 
         <section class="section" id="faq-section">
             <div class="container">
-                <h2 class="section-title fade-in">FAQ <br><span>Частые вопросы</span></h2>
-                <div class="glass-card faq-wrapper fade-in">
-                    <div class="faq-item">
-                        <button class="faq-question">Какая стоимость за видео? <span class="icon">+</span></button>
-                        <div class="faq-answer"><p>Стоимость индивидуальна и зависит от сложности монтажа, графики, эффектов и длины видео. Напишите мне, чтобы обсудить ваш проект и получить точную цену.</p></div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question">Какие сроки выполнения? <span class="icon">+</span></button>
-                        <div class="faq-answer"><p>Средние сроки: 1-3 дня для вертикальных видео (Reels/Shorts) и 5-10 дней для горизонтальных (YouTube). Сроки могут меняться в зависимости от загруженности и сложности проекта.</p></div>
-                    </div>
-                     <div class="faq-item">
-                        <button class="faq-question">В каком формате я получу готовое видео?<span class="icon">+</span></button>
-                        <div class="faq-answer"><p>Вы получите видео в формате MP4 с разрешением 4K или 1080p, полностью готовое к загрузке на любую платформу.</p></div>
-                    </div>
+                <h2 class="section-title reveal">FAQ <span>Частые вопросы</span></h2>
+                <div class="faq-wrapper">
+                    <article class="faq-item reveal">
+                        <button class="faq-question">Какая стоимость за видео?<span>+</span></button>
+                        <div class="faq-answer">
+                            <p>Стоимость рассчитывается индивидуально после оценки исходников, задачи и сроков. Напишите мне, и я быстро дам прозрачную смету.</p>
+                        </div>
+                    </article>
+                    <article class="faq-item reveal">
+                        <button class="faq-question">Какие сроки выполнения?<span>+</span></button>
+                        <div class="faq-answer">
+                            <p>Обычно 1-3 дня для вертикальных роликов и 4-10 дней для горизонтальных. Точный срок зависит от объема правок и сложности проекта.</p>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer id="contact" class="footer">
+    <footer class="footer" id="contact">
         <div class="container">
-            <h2 class="footer-title">Готовы создать шедевр?</h2>
-            <p class="footer-desc">Напишите мне, и мы обсудим ваш будущий проект.</p>
-            <div class="footer-buttons">
-                 <a href="https://t.me/yrizen0" target="_blank" rel="noopener noreferrer" class="btn btn-accent">
-                    <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/></svg>
-                    Написать в Telegram
-                </a>
+            <h2 class="footer-title reveal">Помогу создать видео-шедевр для вашего проекта</h2>
+            <p class="footer-desc reveal">Напишите удобным способом: быстро отвечу на любой вопрос по заказу и подскажу оптимальный формат работы.</p>
+            <div class="footer-buttons reveal">
+                <a href="https://t.me/yrizen0" target="_blank" rel="noopener noreferrer" class="btn btn-accent">Написать в Telegram</a>
+                <a href="mailto:yrizen.alex@gmail.com" class="btn btn-secondary">Написать Email</a>
             </div>
             <div class="footer-bottom">
-                 <a href="#" class="logo">yrizen</a>
-                 <p class="copyright">© 2026. Все права защищены.</p>
+                <a href="#" class="logo">YRIZEN</a>
+                <p>© 2026. Видеомонтаж для брендов, блогеров и бизнеса.</p>
             </div>
         </div>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.15/dist/hls.min.js"></script>
+
+    <template id="reviews-preserved-code">
+        <section id="results" class="section">
+            <div class="container">
+                <h2 class="section-title">Отзывы <span>Что говорят клиенты</span></h2>
+                <div class="reviews-grid">
+                    <article class="review-card">...</article>
+                    <article class="review-card">...</article>
+                </div>
+            </div>
+        </section>
+    </template>
+
     <script src="script.js"></script>
 </body>
 </html>
