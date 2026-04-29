@@ -76,6 +76,7 @@ body {
 .nav-menu {
     display: flex;
     gap: 6px;
+    align-items: center;
 }
 
 .nav-link {
@@ -90,6 +91,28 @@ body {
 .nav-link:hover {
     color: var(--text-main);
     background: rgba(194, 221, 108, 0.12);
+}
+
+.nav-contact {
+    color: var(--brand-mid);
+    font-weight: 700;
+}
+
+.nav-contact:hover {
+    color: #0f140f;
+    background: linear-gradient(90deg, var(--brand-mid), var(--brand-green));
+}
+
+.lang-switch {
+    margin-left: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    padding: 9px 13px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-main);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
 }
 
 .burger-menu {
@@ -128,34 +151,6 @@ body {
     place-items: center;
     padding: 132px 0 88px;
     position: relative;
-    isolation: isolate;
-}
-
-.hero::before,
-.hero::after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    pointer-events: none;
-    border-radius: 28px;
-    opacity: 0.26;
-    filter: saturate(0.8);
-}
-
-.hero::before {
-    width: min(32vw, 340px);
-    aspect-ratio: 3 / 4;
-    right: -6vw;
-    top: 18%;
-    background: url("assets/kitchen-1.png") center / cover no-repeat;
-}
-
-.hero::after {
-    width: min(26vw, 300px);
-    aspect-ratio: 3 / 4;
-    left: -6vw;
-    bottom: 8%;
-    background: url("assets/kitchen-2.png") center / cover no-repeat;
 }
 
 .hero-content {
@@ -170,6 +165,7 @@ body {
     font-size: 11px;
     font-weight: 700;
     margin-bottom: 18px;
+    font-family: "Manrope", "Inter", sans-serif;
 }
 
 .hero-title {
@@ -181,10 +177,10 @@ body {
 }
 
 .hero-title span {
-    display: block;
+    display: inline-block;
     margin-top: 8px;
-    color: var(--brand-light);
-    text-shadow: 0 0 24px rgba(255, 227, 179, 0.26);
+    color: var(--brand-green);
+    text-shadow: 0 0 24px rgba(48, 177, 85, 0.22);
 }
 
 .hero-description {
@@ -342,17 +338,6 @@ body {
     border-radius: 20px;
     background: linear-gradient(155deg, rgba(19, 26, 21, 0.88), rgba(9, 12, 10, 0.88));
     padding: 28px;
-    position: relative;
-    overflow: hidden;
-}
-
-.about-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: url("assets/palette-green.png") right center / 40% auto no-repeat;
-    opacity: 0.18;
-    pointer-events: none;
 }
 
 .about-text h3 {
@@ -477,6 +462,11 @@ body {
         display: flex;
     }
 
+    .lang-switch {
+        margin-left: auto;
+        margin-right: 10px;
+    }
+
     .nav-menu {
         position: fixed;
         top: 76px;
@@ -510,11 +500,6 @@ body {
 @media (max-width: 760px) {
     .hero {
         padding-top: 120px;
-    }
-
-    .hero::before,
-    .hero::after {
-        display: none;
     }
 
     .hero-buttons {
