@@ -8,90 +8,164 @@ document.addEventListener("DOMContentLoaded", () => {
     const html = document.documentElement;
 
     /*
-      Добавьте сюда ссылки на ваши видео.
-      Формат:
-      horizontal: 2 ссылки
-      vertical: 4 ссылки
-
-      Пример:
-      h1: { src: "https://.../video.mp4", label: "YouTube кейс 1" }
+      Добавьте прямую ссылку на видео VK в primarySrc, когда она будет готова.
+      Локальные MP4 используются как запасной источник, если основной не загрузится.
+      Для тега <video> нужна ссылка именно на медиафайл, а не на страницу плеера.
     */
     const VIDEO_LINKS = {
-        h1: { src: "", label: "Горизонтальный кейс 1" },
-        h2: { src: "", label: "Горизонтальный кейс 2" },
-        v1: { src: "", label: "Вертикальный кейс 1" },
-        v2: { src: "", label: "Вертикальный кейс 2" },
-        v3: { src: "", label: "Вертикальный кейс 3" },
-        v4: { src: "", label: "Вертикальный кейс 4" }
+        h1: { primarySrc: "", backupSrc: "video/h-1 Говорящая голова (монтаж, заработок).mp4" },
+        h2: { primarySrc: "", backupSrc: "video/h-2 Из аудио файла.mp4" },
+        v1: { primarySrc: "", backupSrc: "" },
+        v2: { primarySrc: "", backupSrc: "" },
+        v3: { primarySrc: "", backupSrc: "" },
+        v4: { primarySrc: "", backupSrc: "" }
     };
 
     const translations = {
         ru: {
             switchLabel: "EN",
+            switchAria: "Переключить сайт на английский язык",
+            menuOpen: "Открыть меню",
+            menuClose: "Закрыть меню",
+            documentTitle: "Заказать монтаж видео",
+            metaDescription: "Заказать монтаж видео у Александра: вертикальные и горизонтальные ролики, интервью, путешествия, говорящая голова и монтаж по записи голоса.",
+            metaOgDescription: "Профессиональный монтаж всех видов контента: вертикальные и горизонтальные ролики, интервью, путешествия и говорящая голова.",
             navHorizontal: "Горизонтальные",
             navVertical: "Вертикальные",
             navAbout: "Обо мне",
             navContact: "Связаться",
-            heroKicker: "yrizen",
             heroTitle: "Портфолио",
             heroDescription:
                 "Монтирую вертикальные и горизонтальные видео: интервью, путешествия, говорящая голова, экспертные ролики и проекты, где есть только запись голоса.",
             heroButtonOne: "Горизонтальные",
             heroButtonTwo: "Вертикальные",
             worksLabel: "работы",
+            portfolioLabel: "Портфолио",
+            horizontalTitle: "Горизонтальные видео",
+            verticalTitle: "Вертикальные видео",
+            videoH1: "Говорящая голова: монтаж и заработок",
+            videoH2: "Монтаж из аудиофайла",
+            videoV1: "Вертикальный кейс 1",
+            videoV2: "Вертикальный кейс 2",
+            videoV3: "Вертикальный кейс 3",
+            videoV4: "Вертикальный кейс 4",
+            videoUnavailable: "Видео скоро будет добавлено",
             aboutTitle: "Обо мне",
             aboutSubtitle: "Кто стоит за кадром",
+            aboutGreeting: "Привет, я Александр",
+            aboutParagraphOne:
+                "Занимаюсь созданием логичных и структурированных видео, где каждый элемент помогает раскрыть основную идею. В работе опираюсь на темп и ритм, визуальную чистоту и содержательность кадров, чтобы готовый материал вызывал отклик и оставался в памяти.",
+            aboutParagraphTwo:
+                "Видеомонтаж для меня — это не просто выполнение задач, а по-настоящему близкое увлечение, переросшее в любимое дело. Именно поэтому я глубоко погружаюсь в нюансы каждого заказа и искренне стараюсь подготовить качественный результат, который оправдает ваши ожидания.",
+            tagShorts: "Монтаж Reels / Shorts",
+            tagYoutube: "YouTube и интервью",
+            tagColor: "Цвет и ритм",
+            tagBrands: "Контент для брендов",
+            faqCostQuestion: "Какая стоимость за видео?",
+            faqCostAnswer:
+                "Стоимость рассчитывается индивидуально после оценки исходников, задачи и сроков. Напишите мне, и я быстро дам прозрачную смету.",
+            faqTimeQuestion: "Какие сроки выполнения?",
+            faqTimeAnswer:
+                "Варьируются от 1 дня до большого проекта на несколько дней. Точный срок зависит от сложности проекта и объема правок.",
+            faqEditsQuestion: "Сколько доступно правок?",
+            faqEditsAnswer:
+                "В рамках Технического Задания правки бесплатные, но за дополнительные - плата обсуждается в зависимости от объёма и их содержания.",
+            footerTitle: "Помогу создать видео-шедевр для вашего проекта",
+            footerDescription:
+                "Напишите удобным способом: быстро отвечу на любой вопрос по заказу и подскажу оптимальный формат работы.",
             footerTelegram: "Написать в Telegram",
-            footerEmail: "Написать Email"
+            footerEmail: "Написать Email",
+            copyright: "© 2026. Видеомонтаж для брендов, блогеров и бизнеса."
         },
         en: {
             switchLabel: "RU",
+            switchAria: "Switch website language to Russian",
+            menuOpen: "Open menu",
+            menuClose: "Close menu",
+            documentTitle: "Order Video Editing",
+            metaDescription: "Order video editing from Alexander: vertical and horizontal videos, interviews, travel, talking head videos and voice-recording edits.",
+            metaOgDescription: "Professional editing for vertical and horizontal content, interviews, travel and talking head videos.",
             navHorizontal: "Horizontal",
             navVertical: "Vertical",
             navAbout: "About",
             navContact: "Contact",
-            heroKicker: "yrizen",
             heroTitle: "Portfolio",
             heroDescription:
                 "I edit vertical and horizontal videos: interviews, travel content, talking head videos, expert content, and projects that only have a voice recording.",
             heroButtonOne: "Horizontal",
             heroButtonTwo: "Vertical",
             worksLabel: "works",
+            portfolioLabel: "Portfolio",
+            horizontalTitle: "Horizontal videos",
+            verticalTitle: "Vertical videos",
+            videoH1: "Talking head: editing and income",
+            videoH2: "Edit from an audio recording",
+            videoV1: "Vertical case 1",
+            videoV2: "Vertical case 2",
+            videoV3: "Vertical case 3",
+            videoV4: "Vertical case 4",
+            videoUnavailable: "Video will be added soon",
             aboutTitle: "About",
             aboutSubtitle: "Who is behind the frame",
+            aboutGreeting: "Hi, I am Alexander",
+            aboutParagraphOne:
+                "I create clear, structured videos where every element helps communicate the central idea. My work relies on pace and rhythm, visual clarity and meaningful shots, so the finished piece resonates and stays memorable.",
+            aboutParagraphTwo:
+                "Video editing is more than completing tasks for me: it is a genuine passion that became my favourite work. That is why I immerse myself in every project and carefully prepare a result that meets your expectations.",
+            tagShorts: "Reels / Shorts editing",
+            tagYoutube: "YouTube and interviews",
+            tagColor: "Colour and rhythm",
+            tagBrands: "Content for brands",
+            faqCostQuestion: "How much does a video cost?",
+            faqCostAnswer:
+                "Pricing is calculated individually after reviewing your material, the task and timeline. Message me and I will quickly provide a clear estimate.",
+            faqTimeQuestion: "How long does it take?",
+            faqTimeAnswer:
+                "Timing varies from one day to several days for a larger project. The exact timeframe depends on project complexity and the scope of revisions.",
+            faqEditsQuestion: "How many revisions are available?",
+            faqEditsAnswer:
+                "Revisions within the technical brief are free. Additional changes are priced separately depending on their scope and content.",
+            footerTitle: "I will help create a standout video for your project",
+            footerDescription:
+                "Message me in the way that suits you: I will quickly answer questions about your order and suggest the best workflow.",
             footerTelegram: "Message on Telegram",
-            footerEmail: "Send Email"
+            footerEmail: "Send Email",
+            copyright: "© 2026. Video editing for brands, creators and businesses."
         }
     };
 
     const applyLanguage = (lang) => {
         const t = translations[lang] || translations.ru;
         html.lang = lang;
-        if (langSwitch) langSwitch.textContent = t.switchLabel;
 
-        const navLinks = navMenu.querySelectorAll(".nav-link");
-        if (navLinks[0]) navLinks[0].textContent = t.navHorizontal;
-        if (navLinks[1]) navLinks[1].textContent = t.navVertical;
-        if (navLinks[2]) navLinks[2].textContent = t.navAbout;
-        if (navLinks[3]) navLinks[3].textContent = t.navContact;
+        document.querySelectorAll("[data-i18n]").forEach((element) => {
+            const value = t[element.dataset.i18n];
+            if (value) element.textContent = value;
+        });
 
-        const heroKicker = document.querySelector(".hero-kicker");
-        const heroTitle = document.querySelector(".hero-title span");
-        const heroDescription = document.querySelector(".hero-description");
-        const heroButtons = document.querySelectorAll(".hero-buttons .btn");
-        const worksLabel = document.querySelector(".scroll-indicator span");
-        const aboutHeading = document.querySelector("#about .section-title");
-        const footerButtons = document.querySelectorAll(".footer-buttons .btn");
+        document.querySelectorAll("[data-i18n-aria]").forEach((element) => {
+            const value = t[element.dataset.i18nAria];
+            if (value) element.setAttribute("aria-label", value);
+        });
 
-        if (heroKicker) heroKicker.textContent = t.heroKicker;
-        if (heroTitle) heroTitle.textContent = t.heroTitle;
-        if (heroDescription) heroDescription.textContent = t.heroDescription;
-        if (heroButtons[0]) heroButtons[0].textContent = t.heroButtonOne;
-        if (heroButtons[1]) heroButtons[1].textContent = t.heroButtonTwo;
-        if (worksLabel) worksLabel.textContent = t.worksLabel;
-        if (aboutHeading) aboutHeading.innerHTML = `${t.aboutTitle} <span>${t.aboutSubtitle}</span>`;
-        if (footerButtons[0]) footerButtons[0].textContent = t.footerTelegram;
-        if (footerButtons[1]) footerButtons[1].textContent = t.footerEmail;
+        if (langSwitch) {
+            langSwitch.textContent = t.switchLabel;
+            langSwitch.setAttribute("aria-label", t.switchAria);
+        }
+
+        document.title = t.documentTitle;
+        document.querySelector('meta[name="description"]')?.setAttribute("content", t.metaDescription);
+        document.querySelector('meta[property="og:title"]')?.setAttribute("content", t.documentTitle);
+        document.querySelector('meta[property="og:description"]')?.setAttribute("content", t.metaOgDescription);
+        document.querySelector('meta[property="og:locale"]')?.setAttribute("content", lang === "en" ? "en_US" : "ru_RU");
+
+        videoCards.forEach((card) => {
+            card.querySelector(".video-shell")?.setAttribute("data-unavailable-message", t.videoUnavailable);
+        });
+
+        if (burger.getAttribute("aria-expanded") === "true") {
+            burger.setAttribute("aria-label", t.menuClose);
+        }
     };
 
     const initVideos = () => {
@@ -99,32 +173,45 @@ document.addEventListener("DOMContentLoaded", () => {
             const id = card.dataset.videoId;
             const config = VIDEO_LINKS[id];
             const video = card.querySelector(".portfolio-video");
-            const label = card.querySelector(".video-label");
 
-            if (config?.label && label) label.textContent = config.label;
+            if (!config || !video) {
+                card.classList.add("video-unavailable");
+                return;
+            }
 
-            if (!config || !config.src || !video) {
+            const sources = [config.primarySrc, config.backupSrc].filter(Boolean);
+            if (!sources.length) {
                 card.classList.add("video-unavailable");
                 return;
             }
 
             card.classList.remove("video-unavailable");
-            video.src = config.src;
+            sources.forEach((src) => {
+                const source = document.createElement("source");
+                source.src = src;
+                source.type = "video/mp4";
+                video.appendChild(source);
+            });
+            video.addEventListener("error", () => card.classList.add("video-unavailable"), { once: true });
             video.load();
         });
     };
 
     const closeMobileMenu = () => {
+        const t = translations[html.lang] || translations.ru;
         burger.classList.remove("active");
         navMenu.classList.remove("active");
         burger.setAttribute("aria-expanded", "false");
+        burger.setAttribute("aria-label", t.menuOpen);
         document.body.style.overflow = "";
     };
 
     const toggleMobileMenu = () => {
+        const t = translations[html.lang] || translations.ru;
         const opened = burger.classList.toggle("active");
         navMenu.classList.toggle("active", opened);
         burger.setAttribute("aria-expanded", opened ? "true" : "false");
+        burger.setAttribute("aria-label", opened ? t.menuClose : t.menuOpen);
         document.body.style.overflow = opened ? "hidden" : "";
     };
 

@@ -17,7 +17,7 @@
     <link rel="apple-touch-icon" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;700;800&family=Prata&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script type="application/ld+json">
         {
@@ -41,13 +41,13 @@
             <div class="header-inner">
                 <a href="#" class="logo">YRIZEN</a>
                 <nav class="nav-menu" id="nav-menu">
-                    <a href="#horizontal" class="nav-link">Горизонтальные</a>
-                    <a href="#vertical" class="nav-link">Вертикальные</a>
-                    <a href="#about" class="nav-link">Обо мне</a>
-                    <a href="#contact" class="nav-link nav-contact">Связаться</a>
+                    <a href="#horizontal" class="nav-link" data-i18n="navHorizontal">Горизонтальные</a>
+                    <a href="#vertical" class="nav-link" data-i18n="navVertical">Вертикальные</a>
+                    <a href="#about" class="nav-link" data-i18n="navAbout">Обо мне</a>
+                    <a href="#contact" class="nav-link nav-contact" data-i18n="navContact">Связаться</a>
                 </nav>
-                <button class="lang-switch" id="lang-switch" type="button" aria-label="Сменить язык">EN</button>
-                <button class="burger-menu" id="burger-menu" aria-label="Открыть меню" aria-expanded="false">
+                <button class="lang-switch" id="lang-switch" type="button" aria-label="Switch language">EN</button>
+                <button class="burger-menu" id="burger-menu" aria-label="Открыть меню" aria-expanded="false" data-i18n-aria="menuOpen">
                     <span></span>
                     <span></span>
                 </button>
@@ -58,40 +58,42 @@
     <main>
         <section class="hero" id="hero">
             <div class="container hero-content">
-                <p class="hero-kicker reveal">yrizen</p>
                 <h1 class="hero-title reveal">
-                    <span>Портфолио</span>
+                    <span data-i18n="heroTitle">Портфолио</span>
                 </h1>
-                <p class="hero-description reveal">
+                <p class="hero-description reveal" data-i18n="heroDescription">
                     Монтирую вертикальные и горизонтальные видео: интервью, путешествия, говорящая голова,
                     экспертные ролики и проекты, где есть только запись голоса.
                 </p>
                 <div class="hero-buttons reveal">
-                    <a href="#horizontal" class="btn btn-accent">Горизонтальные</a>
-                    <a href="#vertical" class="btn btn-secondary">Вертикальные</a>
+                    <a href="#horizontal" class="btn btn-portfolio btn-horizontal" data-i18n="heroButtonOne">Горизонтальные</a>
+                    <a href="#vertical" class="btn btn-portfolio btn-vertical" data-i18n="heroButtonTwo">Вертикальные</a>
                 </div>
             </div>
             <a class="scroll-indicator reveal" href="#horizontal">
-                <span>работы</span>
+                <span data-i18n="worksLabel">работы</span>
                 <span class="arrow-down" aria-hidden="true"></span>
             </a>
         </section>
 
         <section class="section" id="horizontal">
             <div class="container">
-                <h2 class="section-title reveal">Портфолио <span>Горизонтальные видео</span></h2>
+                <h2 class="section-title reveal">
+                    <span class="section-label" data-i18n="portfolioLabel">Портфолио</span>
+                    <span class="section-heading" data-i18n="horizontalTitle">Горизонтальные видео</span>
+                </h2>
                 <div class="video-grid horizontal-grid">
                     <article class="video-card reveal" data-video-type="horizontal" data-video-id="h1">
                         <div class="video-shell">
                             <video class="portfolio-video" playsinline preload="metadata" controls></video>
                         </div>
-                        <p class="video-label">Горизонтальный кейс 1</p>
+                        <p class="video-label" data-i18n="videoH1">Говорящая голова: монтаж и заработок</p>
                     </article>
                     <article class="video-card reveal" data-video-type="horizontal" data-video-id="h2">
                         <div class="video-shell">
                             <video class="portfolio-video" playsinline preload="metadata" controls></video>
                         </div>
-                        <p class="video-label">Горизонтальный кейс 2</p>
+                        <p class="video-label" data-i18n="videoH2">Монтаж из аудиофайла</p>
                     </article>
                 </div>
             </div>
@@ -99,31 +101,34 @@
 
         <section class="section" id="vertical">
             <div class="container">
-                <h2 class="section-title reveal">Портфолио <span>Вертикальные видео</span></h2>
+                <h2 class="section-title reveal">
+                    <span class="section-label" data-i18n="portfolioLabel">Портфолио</span>
+                    <span class="section-heading" data-i18n="verticalTitle">Вертикальные видео</span>
+                </h2>
                 <div class="video-grid vertical-grid">
                     <article class="video-card reveal" data-video-type="vertical" data-video-id="v1">
                         <div class="video-shell">
                             <video class="portfolio-video" playsinline preload="metadata" controls></video>
                         </div>
-                        <p class="video-label">Вертикальный кейс 1</p>
+                        <p class="video-label" data-i18n="videoV1">Вертикальный кейс 1</p>
                     </article>
                     <article class="video-card reveal" data-video-type="vertical" data-video-id="v2">
                         <div class="video-shell">
                             <video class="portfolio-video" playsinline preload="metadata" controls></video>
                         </div>
-                        <p class="video-label">Вертикальный кейс 2</p>
+                        <p class="video-label" data-i18n="videoV2">Вертикальный кейс 2</p>
                     </article>
                     <article class="video-card reveal" data-video-type="vertical" data-video-id="v3">
                         <div class="video-shell">
                             <video class="portfolio-video" playsinline preload="metadata" controls></video>
                         </div>
-                        <p class="video-label">Вертикальный кейс 3</p>
+                        <p class="video-label" data-i18n="videoV3">Вертикальный кейс 3</p>
                     </article>
                     <article class="video-card reveal" data-video-type="vertical" data-video-id="v4">
                         <div class="video-shell">
                             <video class="portfolio-video" playsinline preload="metadata" controls></video>
                         </div>
-                        <p class="video-label">Вертикальный кейс 4</p>
+                        <p class="video-label" data-i18n="videoV4">Вертикальный кейс 4</p>
                     </article>
                 </div>
             </div>
@@ -131,25 +136,28 @@
 
         <section class="section" id="about">
             <div class="container">
-                <h2 class="section-title reveal">Обо мне <span>Кто стоит за кадром</span></h2>
+                <h2 class="section-title reveal">
+                    <span class="section-label" data-i18n="aboutTitle">Обо мне</span>
+                    <span class="section-heading" data-i18n="aboutSubtitle">Кто стоит за кадром</span>
+                </h2>
                 <article class="about-card reveal">
                     <div class="about-text">
-                        <h3>Привет, я Александр</h3>
-                        <p>
+                        <h3 data-i18n="aboutGreeting">Привет, я Александр</h3>
+                        <p data-i18n="aboutParagraphOne">
                             Занимаюсь созданием логичных и структурированных видео, где каждый элемент помогает раскрыть основную идею.
                             В работе опираюсь на темп и ритм, визуальную чистоту и содержательность кадров, чтобы готовый материал вызывал
                             отклик и оставался в памяти.
                         </p>
-                        <p>
+                        <p data-i18n="aboutParagraphTwo">
                             Видеомонтаж для меня — это не просто выполнение задач, а по-настоящему близкое увлечение, переросшее
                             в любимое дело. Именно поэтому я глубоко погружаюсь в нюансы каждого заказа и искренне стараюсь подготовить
                             качественный результат, который оправдает ваши ожидания.
                         </p>
                         <ul class="about-tags">
-                            <li>Монтаж Reels / Shorts</li>
-                            <li>YouTube и интервью</li>
-                            <li>Цвет и ритм</li>
-                            <li>Контент для брендов</li>
+                            <li data-i18n="tagShorts">Монтаж Reels / Shorts</li>
+                            <li data-i18n="tagYoutube">YouTube и интервью</li>
+                            <li data-i18n="tagColor">Цвет и ритм</li>
+                            <li data-i18n="tagBrands">Контент для брендов</li>
                         </ul>
                     </div>
                 </article>
@@ -160,15 +168,21 @@
             <div class="container">
                 <div class="faq-wrapper">
                     <article class="faq-item reveal">
-                        <button class="faq-question">Какая стоимость за видео?<span>+</span></button>
+                        <button class="faq-question"><span data-i18n="faqCostQuestion">Какая стоимость за видео?</span><span aria-hidden="true">+</span></button>
                         <div class="faq-answer">
-                            <p>Стоимость рассчитывается индивидуально после оценки исходников, задачи и сроков. Напишите мне, и я быстро дам прозрачную смету.</p>
+                            <p data-i18n="faqCostAnswer">Стоимость рассчитывается индивидуально после оценки исходников, задачи и сроков. Напишите мне, и я быстро дам прозрачную смету.</p>
                         </div>
                     </article>
                     <article class="faq-item reveal">
-                        <button class="faq-question">Какие сроки выполнения?<span>+</span></button>
+                        <button class="faq-question"><span data-i18n="faqTimeQuestion">Какие сроки выполнения?</span><span aria-hidden="true">+</span></button>
                         <div class="faq-answer">
-                            <p>Обычно 1-3 дня для вертикальных роликов и 4-10 дней для горизонтальных. Точный срок зависит от объема правок и сложности проекта.</p>
+                            <p data-i18n="faqTimeAnswer">Варьируются от 1 дня до большого проекта на несколько дней. Точный срок зависит от сложности проекта и объема правок.</p>
+                        </div>
+                    </article>
+                    <article class="faq-item reveal">
+                        <button class="faq-question"><span data-i18n="faqEditsQuestion">Сколько доступно правок?</span><span aria-hidden="true">+</span></button>
+                        <div class="faq-answer">
+                            <p data-i18n="faqEditsAnswer">В рамках Технического Задания правки бесплатные, но за дополнительные - плата обсуждается в зависимости от объёма и их содержания.</p>
                         </div>
                     </article>
                 </div>
@@ -178,15 +192,15 @@
 
     <footer class="footer" id="contact">
         <div class="container">
-            <h2 class="footer-title reveal">Помогу создать видео-шедевр для вашего проекта</h2>
-            <p class="footer-desc reveal">Напишите удобным способом: быстро отвечу на любой вопрос по заказу и подскажу оптимальный формат работы.</p>
+            <h2 class="footer-title reveal" data-i18n="footerTitle">Помогу создать видео-шедевр для вашего проекта</h2>
+            <p class="footer-desc reveal" data-i18n="footerDescription">Напишите удобным способом: быстро отвечу на любой вопрос по заказу и подскажу оптимальный формат работы.</p>
             <div class="footer-buttons reveal">
-                <a href="https://t.me/yrizen0" target="_blank" rel="noopener noreferrer" class="btn btn-accent">Написать в Telegram</a>
-                <a href="mailto:yrizen.alex@gmail.com" class="btn btn-secondary">Написать Email</a>
+                <a href="https://t.me/yrizen0" target="_blank" rel="noopener noreferrer" class="btn btn-accent" data-i18n="footerTelegram">Написать в Telegram</a>
+                <a href="mailto:yrizen.alex@gmail.com" class="btn btn-secondary" data-i18n="footerEmail">Написать Email</a>
             </div>
             <div class="footer-bottom">
                 <a href="#" class="logo">YRIZEN</a>
-                <p>© 2026. Видеомонтаж для брендов, блогеров и бизнеса.</p>
+                <p data-i18n="copyright">© 2026. Видеомонтаж для брендов, блогеров и бизнеса.</p>
             </div>
         </div>
     </footer>
