@@ -299,11 +299,34 @@ body {
 .arrow-down {
     display: block;
     flex: 0 0 14px;
-    width: 14px;
+    position: relative;
+    width: 24px;
     height: 14px;
-    border-right: 1px solid var(--brand-mid);
-    border-bottom: 1px solid var(--brand-mid);
-    transform: rotate(45deg);
+    border: 0;
+    transform: none;
+}
+
+.arrow-down::before,
+.arrow-down::after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    width: 12px;
+    height: 1px;
+    border-radius: 999px;
+    background: var(--brand-mid);
+}
+
+.arrow-down::before {
+    right: 50%;
+    transform: rotate(42deg);
+    transform-origin: right center;
+}
+
+.arrow-down::after {
+    left: 50%;
+    transform: rotate(-42deg);
+    transform-origin: left center;
 }
 
 .section {
