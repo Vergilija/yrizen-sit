@@ -15,7 +15,17 @@
 /* Kudry is commercial; this local lookup activates it when a licensed copy is present. */
 @font-face {
     font-family: "Kudry";
-    src: local("Kudry"), local("Kudry Regular");
+    src: url("assets/fonts/Kudry.woff2") format("woff2"),
+        local("Kudry"),
+        local("Kudry Regular");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "PrataLocal";
+    src: url("assets/fonts/Prata-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
     font-display: swap;
 }
 
@@ -65,11 +75,15 @@ body {
     z-index: 1000;
 }
 
+.header .container {
+    max-width: 1040px;
+}
+
 .header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 16px;
+    padding: 9px 14px;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 999px;
     background: rgba(9, 12, 10, 0.66);
@@ -118,7 +132,9 @@ body {
     margin-left: 10px;
     border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 999px;
-    padding: 9px 13px;
+    min-width: 38px;
+    height: 36px;
+    padding: 0 12px;
     background: rgba(255, 255, 255, 0.03);
     color: var(--text-main);
     font-size: 12px;
@@ -128,8 +144,8 @@ body {
 
 .burger-menu {
     display: none;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.14);
     background: rgba(255, 255, 255, 0.03);
@@ -170,7 +186,7 @@ body {
 }
 
 .hero-title {
-    font-family: "Kudry", "Prata", "Manrope", serif;
+    font-family: "Kudry", "PrataLocal", "Prata", "Manrope", serif;
     font-size: clamp(34px, 8vw, 72px);
     font-weight: 400;
     line-height: 1.08;
@@ -260,6 +276,7 @@ body {
     left: 50%;
     bottom: 28px;
     transform: translateX(-50%);
+    width: 112px;
     text-decoration: none;
     display: inline-flex;
     flex-direction: column;
@@ -269,13 +286,19 @@ body {
 }
 
 .scroll-indicator span:not(.arrow-down) {
+    display: block;
+    width: 100%;
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.22em;
-    padding-left: 0.22em;
+    padding-left: 0;
+    text-align: center;
+    text-indent: 0.22em;
 }
 
 .arrow-down {
+    display: block;
+    flex: 0 0 14px;
     width: 14px;
     height: 14px;
     border-right: 1px solid var(--brand-mid);
@@ -533,6 +556,14 @@ body {
 }
 
 @media (max-width: 760px) {
+    .header {
+        inset: 14px 0 auto;
+    }
+
+    .header .container {
+        padding: 0 28px;
+    }
+
     .hero {
         padding-top: 120px;
     }
