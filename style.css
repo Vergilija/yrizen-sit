@@ -515,6 +515,14 @@ body {
     transform: translateY(0);
 }
 
+.scroll-indicator.reveal {
+    transform: translate(-50%, 24px);
+}
+
+.scroll-indicator.reveal.visible {
+    transform: translate(-50%, 0);
+}
+
 @media (max-width: 920px) {
     .burger-menu {
         display: flex;
