@@ -8,17 +8,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const html = document.documentElement;
 
     /*
-      Добавьте прямую ссылку на видео VK в primarySrc, когда она будет готова.
-      Локальные MP4 используются как запасной источник, если основной не загрузится.
-      Для тега <video> нужна ссылка именно на медиафайл, а не на страницу плеера.
+      Self-hosted videos: файлы лежат в папке video/ и проигрываются обычным HTML <video>.
+      Если позже появятся внешние CDN-ссылки, их можно добавить в primarySrc.
     */
     const VIDEO_LINKS = {
         h1: { primarySrc: "", backupSrc: "video/h-1 Говорящая голова (монтаж, заработок).mp4" },
         h2: { primarySrc: "", backupSrc: "video/h-2 Из аудио файла.mp4" },
-        v1: { primarySrc: "", backupSrc: "" },
-        v2: { primarySrc: "", backupSrc: "" },
-        v3: { primarySrc: "", backupSrc: "" },
-        v4: { primarySrc: "", backupSrc: "" }
+        v1: { primarySrc: "", backupSrc: "video/v-1 2 Энергетик финал полный ред булл Red bull.mp4" },
+        v2: { primarySrc: "", backupSrc: "video/v-2 Америк стиль текст.mp4" },
+        v3: { primarySrc: "", backupSrc: "video/v-3 Научпоп.mp4" },
+        v4: { primarySrc: "", backupSrc: "video/v-4 подборка дорогого монтажа рилс.mp4" }
     };
 
     const translations = {
@@ -45,10 +44,10 @@ document.addEventListener("DOMContentLoaded", () => {
             verticalTitle: "Вертикальные видео",
             videoH1: "Говорящая голова: монтаж и заработок",
             videoH2: "Монтаж из аудиофайла",
-            videoV1: "Вертикальный кейс 1",
-            videoV2: "Вертикальный кейс 2",
-            videoV3: "Вертикальный кейс 3",
-            videoV4: "Вертикальный кейс 4",
+            videoV1: "Энергетик Red Bull",
+            videoV2: "Американский стиль: текст",
+            videoV3: "Научпоп",
+            videoV4: "Подборка дорогого монтажа Reels",
             videoUnavailable: "Видео скоро будет добавлено",
             aboutTitle: "Обо мне",
             aboutSubtitle: "Кто стоит за кадром",
@@ -100,10 +99,10 @@ document.addEventListener("DOMContentLoaded", () => {
             verticalTitle: "Vertical videos",
             videoH1: "Talking head: editing and income",
             videoH2: "Edit from an audio recording",
-            videoV1: "Vertical case 1",
-            videoV2: "Vertical case 2",
-            videoV3: "Vertical case 3",
-            videoV4: "Vertical case 4",
+            videoV1: "Red Bull energy drink",
+            videoV2: "American style: text edit",
+            videoV3: "Popular science",
+            videoV4: "Premium Reels editing selection",
             videoUnavailable: "Video will be added soon",
             aboutTitle: "About",
             aboutSubtitle: "Who is behind the frame",
@@ -186,6 +185,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             card.classList.remove("video-unavailable");
+            video.setAttribute("controlslist", "nodownload noplaybackrate");
+            video.setAttribute("disablepictureinpicture", "");
             sources.forEach((src) => {
                 const source = document.createElement("source");
                 source.src = src;
