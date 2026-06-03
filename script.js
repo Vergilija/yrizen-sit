@@ -187,6 +187,37 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const initVideos = () => {
+        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        const saveData = Boolean(connection?.saveData);
+        const slowConnection = /(^|-)2g$/.test(connection?.effectiveType || "");
+        const shouldBackgroundWarm = !saveData && !slowConnection;
+        const warmDelay = slowConnection ? 1600 : 700;
+        const warmRootMargin = shouldBackgroundWarm ? "900px 0px" : "360px 0px";
+        const videoEntries = [];
+
+        const runWhenIdle = (callback, timeout = 1200) => {
+            if ("requestIdleCallback" in window) {
+                window.requestIdleCallback(callback, { timeout });
+                return;
+            }
+            window.setTimeout(callback, Math.min(timeout, 700));
+        };
+
+        const warmVideo = (entry) => {
+            if (entry.warmed || entry.started) return;
+            entry.warmed = true;
+            entry.video.preload = "auto";
+            entry.video.load();
+        };
+
+        const warmQueue = (entries, index = 0) => {
+            if (index >= entries.length) return;
+            runWhenIdle(() => {
+                warmVideo(entries[index]);
+                window.setTimeout(() => warmQueue(entries, index + 1), warmDelay);
+            });
+        };
+
         videoCards.forEach((card) => {
             const id = card.dataset.videoId;
             const config = VIDEO_LINKS[id];
@@ -204,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             card.classList.remove("video-unavailable");
-            video.preload = "auto";
+            video.preload = "none";
             video.setAttribute("controlslist", "nodownload noplaybackrate");
             video.setAttribute("disablepictureinpicture", "");
             sources.forEach((src) => {
@@ -214,8 +245,49 @@ document.addEventListener("DOMContentLoaded", () => {
                 video.appendChild(source);
             });
             video.addEventListener("error", () => card.classList.add("video-unavailable"), { once: true });
-            video.load();
+            const entry = {
+                card,
+                id,
+                video,
+                warmed: false,
+                started: false
+            };
+            video.addEventListener("play", () => {
+                entry.started = true;
+            }, { once: true });
+            video.addEventListener("loadedmetadata", () => {
+                card.classList.add("video-ready");
+            }, { once: true });
+            video.addEventListener("pointerenter", () => warmVideo(entry), { passive: true });
+            video.addEventListener("pointerdown", () => warmVideo(entry), { passive: true });
+            video.addEventListener("focus", () => warmVideo(entry));
+            videoEntries.push(entry);
         });
+
+        if (!videoEntries.length) return;
+
+        const proximityObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((observerEntry) => {
+                    if (!observerEntry.isIntersecting) return;
+                    const videoEntry = videoEntries.find((entry) => entry.card === observerEntry.target);
+                    if (videoEntry) warmVideo(videoEntry);
+                    proximityObserver.unobserve(observerEntry.target);
+                });
+            },
+            { rootMargin: warmRootMargin, threshold: 0.01 }
+        );
+
+        videoEntries.forEach((entry) => proximityObserver.observe(entry.card));
+
+        if (shouldBackgroundWarm) {
+            const priorityEntries = [
+                ...videoEntries.filter((entry) => entry.card.dataset.videoType === "horizontal"),
+                ...videoEntries.filter((entry) => entry.card.dataset.videoType !== "horizontal")
+            ];
+
+            window.setTimeout(() => warmQueue(priorityEntries), 900);
+        }
     };
 
     const closeMobileMenu = () => {
