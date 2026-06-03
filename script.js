@@ -225,13 +225,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const saveData = Boolean(connection?.saveData);
         const slowConnection = /(^|-)2g$/.test(connection?.effectiveType || "");
         const shouldBackgroundWarm = !saveData && !slowConnection;
-        const warmDelay = slowConnection ? 1600 : 700;
+        const warmDelay = slowConnection ? 1200 : 420;
         const warmRootMargin = shouldBackgroundWarm ? "900px 0px" : "360px 0px";
         const videoEntries = [];
         const verticalCarousel = document.querySelector('[data-carousel="vertical"]');
         const verticalScroller = verticalCarousel?.querySelector(".vertical-grid");
         const verticalPrev = verticalCarousel?.querySelector("[data-carousel-prev]");
         const verticalNext = verticalCarousel?.querySelector("[data-carousel-next]");
+        const heavyVideoIds = new Set(["v3"]);
 
         const runWhenIdle = (callback, timeout = 1200) => {
             if ("requestIdleCallback" in window) {
@@ -260,8 +261,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const warmQueue = (entries, index = 0, preload = "metadata") => {
             if (index >= entries.length) return;
+            const entry = entries[index];
+            if (!entry || (preload !== "auto" && heavyVideoIds.has(entry.id))) {
+                warmQueue(entries, index + 1, preload);
+                return;
+            }
             runWhenIdle(() => {
-                warmVideo(entries[index], preload);
+                warmVideo(entry, preload);
                 window.setTimeout(() => warmQueue(entries, index + 1, preload), warmDelay);
             });
         };
@@ -366,6 +372,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }, { once: true });
             video.addEventListener("pointerenter", () => warmVideo(entry, "auto"), { passive: true });
             video.addEventListener("pointerdown", () => warmVideo(entry, "auto"), { passive: true });
+            video.addEventListener("touchstart", () => warmVideo(entry, "auto"), { passive: true });
             video.addEventListener("focus", () => warmVideo(entry, "auto"));
             videoEntries.push(entry);
         });
@@ -397,10 +404,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (shouldBackgroundWarm) {
+            const firstHorizontalEntry = videoEntries.find((entry) => entry.id === "h1");
             const priorityEntries = [
                 ...videoEntries.filter((entry) => entry.card.dataset.videoType === "horizontal")
             ];
 
+            if (firstHorizontalEntry) {
+                window.setTimeout(() => warmVideo(firstHorizontalEntry, "auto"), 320);
+            }
             window.setTimeout(() => warmQueue(priorityEntries, 0, "metadata"), 900);
         }
 
