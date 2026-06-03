@@ -228,6 +228,13 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         };
 
+        const pauseOtherVideos = (currentEntry) => {
+            videoEntries.forEach((entry) => {
+                if (entry === currentEntry || entry.video.paused) return;
+                entry.video.pause();
+            });
+        };
+
         const getVerticalEntries = () => videoEntries.filter((entry) => entry.card.dataset.videoType === "vertical");
 
         const getActiveVerticalIndex = () => {
@@ -310,7 +317,8 @@ document.addEventListener("DOMContentLoaded", () => {
             };
             video.addEventListener("play", () => {
                 entry.started = true;
-            }, { once: true });
+                pauseOtherVideos(entry);
+            });
             video.addEventListener("loadedmetadata", () => {
                 card.classList.add("video-ready");
             }, { once: true });
