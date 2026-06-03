@@ -186,6 +186,7 @@ body {
 }
 
 .hero-title {
+    --hero-title-height: clamp(54px, 7vw, 88px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -205,11 +206,15 @@ body {
 .hero-title-image {
     display: none;
     width: auto;
-    height: clamp(64px, 8.5vw, 104px);
-    max-width: min(100%, 560px);
+    height: var(--hero-title-height);
+    max-width: min(100%, 500px);
     object-fit: contain;
     image-rendering: auto;
     filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.1));
+}
+
+.hero-title-image-en {
+    height: calc(var(--hero-title-height) * 0.94);
 }
 
 html[lang="ru"] .hero-title-image-ru,
@@ -225,11 +230,15 @@ html[lang="en"] .hero-title-image-en {
 }
 
 .hero-buttons {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(100%, 352px);
     gap: 12px;
-    margin-top: 36px;
+    margin: 34px auto 0;
+}
+
+.hero-buttons .btn {
+    width: 100%;
 }
 
 .btn {
@@ -739,10 +748,8 @@ html[lang="en"] .hero-title-image-en {
     }
 
     .hero-buttons {
-        flex-direction: column;
-        align-items: stretch;
-        max-width: 320px;
-        margin-inline: auto;
+        grid-template-columns: 1fr;
+        width: min(100%, 320px);
         margin-top: 28px;
     }
 
