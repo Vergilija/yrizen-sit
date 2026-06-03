@@ -186,17 +186,35 @@ body {
 }
 
 .hero-title {
-    font-family: "Kudry", "PrataLocal", "Prata", "Manrope", serif;
-    font-size: clamp(34px, 8vw, 72px);
-    font-weight: 400;
-    line-height: 1.08;
-    letter-spacing: -0.045em;
+    display: flex;
+    justify-content: center;
+    line-height: 1;
 }
 
-.hero-title span {
-    display: inline-block;
-    color: #fff;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+.hero-title-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.hero-title-image {
+    display: none;
+    width: min(100%, clamp(280px, 44vw, 492px));
+    height: auto;
+    filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.1));
+}
+
+.hero-title-image-en {
+    width: min(100%, clamp(270px, 42vw, 472px));
+}
+
+html[lang="ru"] .hero-title-image-ru,
+html[lang="en"] .hero-title-image-en {
+    display: block;
 }
 
 .hero-description {
