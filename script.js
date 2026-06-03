@@ -263,7 +263,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const activeIndex = getActiveVerticalIndex();
 
             entries.forEach((entry, index) => {
-                entry.card.classList.toggle("is-active", index === activeIndex);
+                const isActive = index === activeIndex;
+                entry.card.classList.toggle("is-active", isActive);
+                entry.video.controls = isActive;
+                entry.video.tabIndex = isActive ? 0 : -1;
+                if (!isActive && !entry.video.paused) entry.video.pause();
             });
 
             if (verticalPrev) verticalPrev.classList.toggle("is-disabled", activeIndex === 0);
