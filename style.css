@@ -188,6 +188,7 @@ body {
 .hero-title {
     display: flex;
     justify-content: center;
+    align-items: center;
     line-height: 1;
 }
 
@@ -203,13 +204,12 @@ body {
 
 .hero-title-image {
     display: none;
-    width: min(100%, clamp(280px, 44vw, 492px));
-    height: auto;
+    width: auto;
+    height: clamp(64px, 8.5vw, 104px);
+    max-width: min(100%, 560px);
+    object-fit: contain;
+    image-rendering: auto;
     filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.1));
-}
-
-.hero-title-image-en {
-    width: min(100%, clamp(270px, 42vw, 472px));
 }
 
 html[lang="ru"] .hero-title-image-ru,
