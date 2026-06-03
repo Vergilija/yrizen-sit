@@ -68,6 +68,9 @@ document.addEventListener("DOMContentLoaded", () => {
             videoV3: "Научпоп",
             videoV4: "Подборка дорогого монтажа Reels",
             videoUnavailable: "Видео скоро будет добавлено",
+            prevVideo: "Предыдущее видео",
+            nextVideo: "Следующее видео",
+            verticalCarousel: "Карусель вертикальных видео",
             aboutTitle: "Обо мне",
             aboutSubtitle: "Кто стоит за кадром",
             aboutGreeting: "Привет, я Александр",
@@ -123,6 +126,9 @@ document.addEventListener("DOMContentLoaded", () => {
             videoV3: "Popular science",
             videoV4: "Premium Reels editing selection",
             videoUnavailable: "Video will be added soon",
+            prevVideo: "Previous video",
+            nextVideo: "Next video",
+            verticalCarousel: "Vertical videos carousel",
             aboutTitle: "About",
             aboutSubtitle: "Who is behind the frame",
             aboutGreeting: "Hi, I am Alexander",
@@ -194,6 +200,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const warmDelay = slowConnection ? 1600 : 700;
         const warmRootMargin = shouldBackgroundWarm ? "900px 0px" : "360px 0px";
         const videoEntries = [];
+        const verticalCarousel = document.querySelector('[data-carousel="vertical"]');
+        const verticalScroller = verticalCarousel?.querySelector(".vertical-grid");
+        const verticalPrev = verticalCarousel?.querySelector("[data-carousel-prev]");
+        const verticalNext = verticalCarousel?.querySelector("[data-carousel-next]");
 
         const runWhenIdle = (callback, timeout = 1200) => {
             if ("requestIdleCallback" in window) {
@@ -216,6 +226,48 @@ document.addEventListener("DOMContentLoaded", () => {
                 warmVideo(entries[index]);
                 window.setTimeout(() => warmQueue(entries, index + 1), warmDelay);
             });
+        };
+
+        const getVerticalEntries = () => videoEntries.filter((entry) => entry.card.dataset.videoType === "vertical");
+
+        const getActiveVerticalIndex = () => {
+            const entries = getVerticalEntries();
+            if (!entries.length || !verticalScroller) return 0;
+
+            const scrollerCenter = verticalScroller.scrollLeft + verticalScroller.clientWidth / 2;
+            let activeIndex = 0;
+            let nearestDistance = Infinity;
+
+            entries.forEach((entry, index) => {
+                const cardCenter = entry.card.offsetLeft + entry.card.offsetWidth / 2;
+                const distance = Math.abs(cardCenter - scrollerCenter);
+                if (distance < nearestDistance) {
+                    nearestDistance = distance;
+                    activeIndex = index;
+                }
+            });
+
+            return activeIndex;
+        };
+
+        const warmVerticalFrom = (index) => {
+            const entries = getVerticalEntries();
+            const ordered = entries.slice(index).concat(entries.slice(0, index));
+            warmQueue(ordered, 0);
+        };
+
+        const updateVerticalCarousel = () => {
+            if (!verticalScroller) return;
+
+            const entries = getVerticalEntries();
+            const activeIndex = getActiveVerticalIndex();
+
+            entries.forEach((entry, index) => {
+                entry.card.classList.toggle("is-active", index === activeIndex);
+            });
+
+            if (verticalPrev) verticalPrev.classList.toggle("is-disabled", activeIndex === 0);
+            if (verticalNext) verticalNext.classList.toggle("is-disabled", activeIndex >= entries.length - 1);
         };
 
         videoCards.forEach((card) => {
@@ -278,15 +330,55 @@ document.addEventListener("DOMContentLoaded", () => {
             { rootMargin: warmRootMargin, threshold: 0.01 }
         );
 
-        videoEntries.forEach((entry) => proximityObserver.observe(entry.card));
+        videoEntries
+            .filter((entry) => entry.card.dataset.videoType !== "vertical")
+            .forEach((entry) => proximityObserver.observe(entry.card));
+
+        const verticalEntries = getVerticalEntries();
+        if (verticalEntries.length) {
+            verticalEntries[0].card.classList.add("is-active");
+            verticalCarousel?.classList.add("hint");
+            warmVideo(verticalEntries[0]);
+            window.setTimeout(() => warmQueue(verticalEntries.slice(1)), warmDelay);
+        }
 
         if (shouldBackgroundWarm) {
             const priorityEntries = [
-                ...videoEntries.filter((entry) => entry.card.dataset.videoType === "horizontal"),
-                ...videoEntries.filter((entry) => entry.card.dataset.videoType !== "horizontal")
+                ...videoEntries.filter((entry) => entry.card.dataset.videoType === "horizontal")
             ];
 
             window.setTimeout(() => warmQueue(priorityEntries), 900);
+        }
+
+        if (verticalScroller && verticalEntries.length) {
+            let scrollTimer;
+            verticalScroller.addEventListener("scroll", () => {
+                window.clearTimeout(scrollTimer);
+                updateVerticalCarousel();
+                scrollTimer = window.setTimeout(() => {
+                    const activeIndex = getActiveVerticalIndex();
+                    warmVideo(verticalEntries[activeIndex]);
+                    warmVerticalFrom(activeIndex + 1);
+                    verticalCarousel?.classList.remove("hint");
+                }, 140);
+            }, { passive: true });
+
+            verticalScroller.addEventListener("pointerdown", () => {
+                verticalCarousel?.classList.remove("hint");
+            }, { passive: true });
+
+            const scrollToVertical = (direction) => {
+                const activeIndex = getActiveVerticalIndex();
+                const nextIndex = Math.max(0, Math.min(verticalEntries.length - 1, activeIndex + direction));
+                verticalEntries[nextIndex].card.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+                warmVideo(verticalEntries[nextIndex]);
+                warmVerticalFrom(nextIndex + 1);
+                verticalCarousel?.classList.remove("hint");
+            };
+
+            verticalPrev?.addEventListener("click", () => scrollToVertical(-1));
+            verticalNext?.addEventListener("click", () => scrollToVertical(1));
+            updateVerticalCarousel();
         }
     };
 

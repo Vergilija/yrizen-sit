@@ -105,31 +105,35 @@
                     <span class="section-label" data-i18n="portfolioLabel">Портфолио</span>
                     <span class="section-heading" data-i18n="verticalTitle">Вертикальные видео</span>
                 </h2>
-                <div class="video-grid vertical-grid">
-                    <article class="video-card reveal" data-video-type="vertical" data-video-id="v1">
-                        <div class="video-shell">
-                            <video class="portfolio-video" playsinline preload="metadata" controls></video>
-                        </div>
-                        <p class="video-label" data-i18n="videoV1">Энергетик Red Bull</p>
-                    </article>
-                    <article class="video-card reveal" data-video-type="vertical" data-video-id="v2">
-                        <div class="video-shell">
-                            <video class="portfolio-video" playsinline preload="metadata" controls></video>
-                        </div>
-                        <p class="video-label" data-i18n="videoV2">Американский стиль: текст</p>
-                    </article>
-                    <article class="video-card reveal" data-video-type="vertical" data-video-id="v3">
-                        <div class="video-shell">
-                            <video class="portfolio-video" playsinline preload="metadata" controls></video>
-                        </div>
-                        <p class="video-label" data-i18n="videoV3">Научпоп</p>
-                    </article>
-                    <article class="video-card reveal" data-video-type="vertical" data-video-id="v4">
-                        <div class="video-shell">
-                            <video class="portfolio-video" playsinline preload="metadata" controls></video>
-                        </div>
-                        <p class="video-label" data-i18n="videoV4">Подборка дорогого монтажа Reels</p>
-                    </article>
+                <div class="vertical-carousel reveal" data-carousel="vertical">
+                    <button class="carousel-arrow carousel-arrow-prev" type="button" aria-label="Предыдущее видео" data-carousel-prev data-i18n-aria="prevVideo"></button>
+                    <div class="video-grid vertical-grid" tabindex="0" aria-label="Вертикальные видео" data-i18n-aria="verticalCarousel">
+                        <article class="video-card" data-video-type="vertical" data-video-id="v1">
+                            <div class="video-shell">
+                                <video class="portfolio-video" playsinline preload="metadata" controls></video>
+                            </div>
+                            <p class="video-label" data-i18n="videoV1">Энергетик Red Bull</p>
+                        </article>
+                        <article class="video-card" data-video-type="vertical" data-video-id="v2">
+                            <div class="video-shell">
+                                <video class="portfolio-video" playsinline preload="metadata" controls></video>
+                            </div>
+                            <p class="video-label" data-i18n="videoV2">Американский стиль: текст</p>
+                        </article>
+                        <article class="video-card" data-video-type="vertical" data-video-id="v3">
+                            <div class="video-shell">
+                                <video class="portfolio-video" playsinline preload="metadata" controls></video>
+                            </div>
+                            <p class="video-label" data-i18n="videoV3">Научпоп</p>
+                        </article>
+                        <article class="video-card" data-video-type="vertical" data-video-id="v4">
+                            <div class="video-shell">
+                                <video class="portfolio-video" playsinline preload="metadata" controls></video>
+                            </div>
+                            <p class="video-label" data-i18n="videoV4">Подборка дорогого монтажа Reels</p>
+                        </article>
+                    </div>
+                    <button class="carousel-arrow carousel-arrow-next" type="button" aria-label="Следующее видео" data-carousel-next data-i18n-aria="nextVideo"></button>
                 </div>
             </div>
         </section>

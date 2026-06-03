@@ -364,10 +364,6 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
-.vertical-grid {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-}
-
 .video-card {
     overflow: hidden;
     border-radius: 18px;
@@ -382,10 +378,6 @@ body {
 
 .horizontal-grid .video-shell {
     aspect-ratio: 16 / 9;
-}
-
-.vertical-grid .video-shell {
-    aspect-ratio: 9 / 16;
 }
 
 .portfolio-video {
@@ -538,6 +530,131 @@ body {
     transform: translateY(0);
 }
 
+.vertical-carousel {
+    --vertical-card-width: clamp(250px, 34vw, 360px);
+    --vertical-gap: clamp(18px, 3vw, 30px);
+    position: relative;
+    display: grid;
+    align-items: center;
+}
+
+.vertical-grid {
+    display: flex;
+    gap: var(--vertical-gap);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: max(24px, calc((100% - var(--vertical-card-width)) / 2));
+    padding: 4px max(24px, calc((100% - var(--vertical-card-width)) / 2)) 18px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.vertical-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.vertical-grid:focus {
+    outline: none;
+}
+
+.vertical-grid .video-card {
+    flex: 0 0 var(--vertical-card-width);
+    scroll-snap-align: center;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.vertical-grid .video-card:not(.is-active) {
+    opacity: 0.46;
+    transform: scale(0.94);
+}
+
+.vertical-grid .video-card.is-active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.vertical-grid .video-shell {
+    aspect-ratio: 9 / 16;
+}
+
+.vertical-carousel::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 18px auto;
+    width: min(120px, 18vw);
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(9, 12, 10, 0), var(--bg-main));
+    opacity: 0.58;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: calc(50% - 22px);
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(194, 221, 108, 0.28);
+    border-radius: 999px;
+    background: rgba(9, 12, 10, 0.7);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s, border-color 0.2s;
+}
+
+.carousel-arrow:hover {
+    transform: scale(1.05);
+    border-color: rgba(194, 221, 108, 0.6);
+}
+
+.carousel-arrow::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 12px;
+    height: 12px;
+    margin: auto;
+    border-top: 2px solid var(--brand-mid);
+    border-right: 2px solid var(--brand-mid);
+}
+
+.carousel-arrow-prev {
+    left: max(12px, calc((100% - var(--vertical-card-width)) / 2 - 76px));
+}
+
+.carousel-arrow-prev::before {
+    transform: rotate(-135deg);
+}
+
+.carousel-arrow-next {
+    right: max(12px, calc((100% - var(--vertical-card-width)) / 2 - 76px));
+}
+
+.carousel-arrow-next::before {
+    transform: rotate(45deg);
+}
+
+.carousel-arrow.is-disabled {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.vertical-carousel.hint .vertical-grid .video-card:first-child {
+    animation: carousel-nudge 2.6s ease-in-out 0.8s 3;
+}
+
+@keyframes carousel-nudge {
+    0%, 100% {
+        transform: scale(1) translateX(0);
+    }
+    36% {
+        transform: scale(1) translateX(-12px);
+    }
+    70% {
+        transform: scale(1) translateX(8px);
+    }
+}
+
 .scroll-indicator.reveal {
     transform: translate(-50%, 24px);
 }
@@ -615,8 +732,27 @@ body {
         padding: 72px 0;
     }
 
+    .vertical-carousel {
+        --vertical-card-width: min(72vw, 320px);
+    }
+
     .vertical-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        scroll-padding-inline: 22px;
+        padding-inline: 22px;
+    }
+
+    .carousel-arrow {
+        width: 40px;
+        height: 40px;
+        top: calc(50% - 20px);
+    }
+
+    .carousel-arrow-prev {
+        left: 8px;
+    }
+
+    .carousel-arrow-next {
+        right: 8px;
     }
 
     .footer-bottom {
