@@ -8,16 +8,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const html = document.documentElement;
 
     /*
-      Self-hosted videos: файлы лежат в папке video/ и проигрываются обычным HTML <video>.
+      Self-hosted videos: быстрые веб-версии лежат в video-web/ и проигрываются обычным HTML <video>.
+      Оригиналы из video/ оставлены запасным источником.
       Если позже появятся внешние CDN-ссылки, их можно добавить в primarySrc.
     */
     const VIDEO_LINKS = {
-        h1: { primarySrc: "", backupSrc: "video/h-1 Говорящая голова (монтаж, заработок).mp4" },
-        h2: { primarySrc: "", backupSrc: "video/h-2 Из аудио файла.mp4" },
-        v1: { primarySrc: "", backupSrc: "video/v-1 2 Энергетик финал полный ред булл Red bull.mp4" },
-        v2: { primarySrc: "", backupSrc: "video/v-2 Америк стиль текст.mp4" },
-        v3: { primarySrc: "", backupSrc: "video/v-3 Научпоп.mp4" },
-        v4: { primarySrc: "", backupSrc: "video/v-4 подборка дорогого монтажа рилс.mp4" }
+        h1: {
+            primarySrc: "video-web/h1.mp4",
+            backupSrc: "video/h-1 Говорящая голова (монтаж, заработок).mp4"
+        },
+        h2: {
+            primarySrc: "video-web/h2.mp4",
+            backupSrc: "video/h-2 Из аудио файла.mp4"
+        },
+        v1: {
+            primarySrc: "video-web/v1.mp4",
+            backupSrc: "video/v-1 2 Энергетик финал полный ред булл Red bull.mp4"
+        },
+        v2: {
+            primarySrc: "video-web/v2.mp4",
+            backupSrc: "video/v-2 Америк стиль текст.mp4"
+        },
+        v3: {
+            primarySrc: "video-web/v3.mp4",
+            backupSrc: "video/v-3 Научпоп.mp4"
+        },
+        v4: {
+            primarySrc: "video-web/v4.mp4",
+            backupSrc: "video/v-4 подборка дорогого монтажа рилс.mp4"
+        }
     };
 
     const translations = {
@@ -185,6 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             card.classList.remove("video-unavailable");
+            video.preload = "auto";
             video.setAttribute("controlslist", "nodownload noplaybackrate");
             video.setAttribute("disablepictureinpicture", "");
             sources.forEach((src) => {
