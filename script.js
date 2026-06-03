@@ -14,26 +14,32 @@ document.addEventListener("DOMContentLoaded", () => {
     */
     const VIDEO_LINKS = {
         h1: {
+            poster: "assets/posters/h1.webp",
             primarySrc: "video-web/h1.mp4",
             backupSrc: "video/h-1 Говорящая голова (монтаж, заработок).mp4"
         },
         h2: {
+            poster: "assets/posters/h2.webp",
             primarySrc: "video-web/h2.mp4",
             backupSrc: "video/h-2 Из аудио файла.mp4"
         },
         v1: {
+            poster: "assets/posters/v1.webp",
             primarySrc: "video-web/v1.mp4",
             backupSrc: "video/v-1 2 Энергетик финал полный ред булл Red bull.mp4"
         },
         v2: {
+            poster: "assets/posters/v2.webp",
             primarySrc: "video-web/v2.mp4",
             backupSrc: "video/v-2 Америк стиль текст.mp4"
         },
         v3: {
+            poster: "assets/posters/v3.webp",
             primarySrc: "video-web/v3.mp4",
             backupSrc: "video/v-3 Научпоп.mp4"
         },
         v4: {
+            poster: "assets/posters/v4.webp",
             primarySrc: "video-web/v4.mp4",
             backupSrc: "video/v-4 подборка дорогого монтажа рилс.mp4"
         }
@@ -213,18 +219,28 @@ document.addEventListener("DOMContentLoaded", () => {
             window.setTimeout(callback, Math.min(timeout, 700));
         };
 
-        const warmVideo = (entry) => {
-            if (entry.warmed || entry.started) return;
-            entry.warmed = true;
-            entry.video.preload = "auto";
+        const warmLevels = {
+            none: 0,
+            metadata: 1,
+            auto: 2
+        };
+
+        const warmVideo = (entry, preload = "auto") => {
+            if (entry.started) return;
+            const currentLevel = warmLevels[entry.warmLevel] || warmLevels.none;
+            const nextLevel = warmLevels[preload] || warmLevels.auto;
+            if (currentLevel >= nextLevel) return;
+            entry.warmLevel = preload;
+            entry.warmed = preload === "auto";
+            entry.video.preload = preload;
             entry.video.load();
         };
 
-        const warmQueue = (entries, index = 0) => {
+        const warmQueue = (entries, index = 0, preload = "metadata") => {
             if (index >= entries.length) return;
             runWhenIdle(() => {
-                warmVideo(entries[index]);
-                window.setTimeout(() => warmQueue(entries, index + 1), warmDelay);
+                warmVideo(entries[index], preload);
+                window.setTimeout(() => warmQueue(entries, index + 1, preload), warmDelay);
             });
         };
 
@@ -257,10 +273,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return activeIndex;
         };
 
-        const warmVerticalFrom = (index) => {
+        const warmVerticalAhead = (index) => {
             const entries = getVerticalEntries();
-            const ordered = entries.slice(index).concat(entries.slice(0, index));
-            warmQueue(ordered, 0);
+            const nextEntry = entries[index];
+            if (nextEntry) warmVideo(nextEntry, "auto");
+            warmQueue(entries.slice(index + 1), 0, "metadata");
         };
 
         const updateVerticalCarousel = () => {
@@ -299,6 +316,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             card.classList.remove("video-unavailable");
             video.preload = "none";
+            if (config.poster) video.poster = config.poster;
             video.setAttribute("controlslist", "nodownload noplaybackrate");
             video.setAttribute("disablepictureinpicture", "");
             sources.forEach((src) => {
@@ -313,18 +331,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 id,
                 video,
                 warmed: false,
+                warmLevel: "none",
                 started: false
             };
             video.addEventListener("play", () => {
                 entry.started = true;
+                entry.warmLevel = "auto";
                 pauseOtherVideos(entry);
             });
             video.addEventListener("loadedmetadata", () => {
                 card.classList.add("video-ready");
             }, { once: true });
-            video.addEventListener("pointerenter", () => warmVideo(entry), { passive: true });
-            video.addEventListener("pointerdown", () => warmVideo(entry), { passive: true });
-            video.addEventListener("focus", () => warmVideo(entry));
+            video.addEventListener("pointerenter", () => warmVideo(entry, "auto"), { passive: true });
+            video.addEventListener("pointerdown", () => warmVideo(entry, "auto"), { passive: true });
+            video.addEventListener("focus", () => warmVideo(entry, "auto"));
             videoEntries.push(entry);
         });
 
@@ -350,8 +370,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (verticalEntries.length) {
             verticalEntries[0].card.classList.add("is-active");
             verticalCarousel?.classList.add("hint");
-            warmVideo(verticalEntries[0]);
-            window.setTimeout(() => warmQueue(verticalEntries.slice(1)), warmDelay);
+            warmVideo(verticalEntries[0], "auto");
+            window.setTimeout(() => warmVerticalAhead(1), warmDelay);
         }
 
         if (shouldBackgroundWarm) {
@@ -359,7 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ...videoEntries.filter((entry) => entry.card.dataset.videoType === "horizontal")
             ];
 
-            window.setTimeout(() => warmQueue(priorityEntries), 900);
+            window.setTimeout(() => warmQueue(priorityEntries, 0, "metadata"), 900);
         }
 
         if (verticalScroller && verticalEntries.length) {
@@ -369,8 +389,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 updateVerticalCarousel();
                 scrollTimer = window.setTimeout(() => {
                     const activeIndex = getActiveVerticalIndex();
-                    warmVideo(verticalEntries[activeIndex]);
-                    warmVerticalFrom(activeIndex + 1);
+                    warmVideo(verticalEntries[activeIndex], "auto");
+                    warmVerticalAhead(activeIndex + 1);
                     verticalCarousel?.classList.remove("hint");
                 }, 140);
             }, { passive: true });
@@ -383,8 +403,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 const activeIndex = getActiveVerticalIndex();
                 const nextIndex = Math.max(0, Math.min(verticalEntries.length - 1, activeIndex + direction));
                 verticalEntries[nextIndex].card.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-                warmVideo(verticalEntries[nextIndex]);
-                warmVerticalFrom(nextIndex + 1);
+                warmVideo(verticalEntries[nextIndex], "auto");
+                warmVerticalAhead(nextIndex + 1);
                 verticalCarousel?.classList.remove("hint");
             };
 
