@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const revealElements = document.querySelectorAll(".reveal");
     const videoCards = document.querySelectorAll(".video-card");
     const html = document.documentElement;
+    const heroTitle = document.querySelector(".hero-title");
+    const heroTitleImages = document.querySelectorAll(".hero-title-image");
 
     /*
       Self-hosted videos: быстрые веб-версии лежат в video-web/ и проигрываются обычным HTML <video>.
@@ -14,32 +16,32 @@ document.addEventListener("DOMContentLoaded", () => {
     */
     const VIDEO_LINKS = {
         h1: {
-            poster: "assets/posters/h1.webp",
+            poster: "assets/posters/h1.jpg",
             primarySrc: "video-web/h1.mp4",
             backupSrc: "video/h-1 Говорящая голова (монтаж, заработок).mp4"
         },
         h2: {
-            poster: "assets/posters/h2.webp",
+            poster: "assets/posters/h2.jpg",
             primarySrc: "video-web/h2.mp4",
             backupSrc: "video/h-2 Из аудио файла.mp4"
         },
         v1: {
-            poster: "assets/posters/v1.webp",
+            poster: "assets/posters/v1.jpg",
             primarySrc: "video-web/v1.mp4",
             backupSrc: "video/v-1 2 Энергетик финал полный ред булл Red bull.mp4"
         },
         v2: {
-            poster: "assets/posters/v2.webp",
+            poster: "assets/posters/v2.jpg",
             primarySrc: "video-web/v2.mp4",
             backupSrc: "video/v-2 Америк стиль текст.mp4"
         },
         v3: {
-            poster: "assets/posters/v3.webp",
+            poster: "assets/posters/v3.jpg",
             primarySrc: "video-web/v3.mp4",
             backupSrc: "video/v-3 Научпоп.mp4"
         },
         v4: {
-            poster: "assets/posters/v4.webp",
+            poster: "assets/posters/v4.jpg",
             primarySrc: "video-web/v4.mp4",
             backupSrc: "video/v-4 подборка дорогого монтажа рилс.mp4"
         }
@@ -196,7 +198,27 @@ document.addEventListener("DOMContentLoaded", () => {
         if (burger.getAttribute("aria-expanded") === "true") {
             burger.setAttribute("aria-label", t.menuClose);
         }
+
+        updateHeroTitleFallback();
     };
+
+    const updateHeroTitleFallback = () => {
+        if (!heroTitle) return;
+        const activeImage = document.querySelector(`.hero-title-image-${html.lang}`);
+        const imageFailed = Boolean(activeImage?.dataset.failed) || Boolean(activeImage?.complete && activeImage.naturalWidth === 0);
+        heroTitle.classList.toggle("is-image-fallback", imageFailed);
+    };
+
+    heroTitleImages.forEach((image) => {
+        image.addEventListener("error", () => {
+            image.dataset.failed = "true";
+            updateHeroTitleFallback();
+        });
+        image.addEventListener("load", () => {
+            delete image.dataset.failed;
+            updateHeroTitleFallback();
+        });
+    });
 
     const initVideos = () => {
         const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
