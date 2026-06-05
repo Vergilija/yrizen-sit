@@ -1,4 +1,27 @@
+if ("scrollRestoration" in window.history) {
+    window.history.scrollRestoration = "manual";
+}
+
+let keepCurrentScroll = false;
+
+const resetOpeningScroll = () => {
+    if (keepCurrentScroll) return;
+    if (window.location.hash) {
+        window.history.replaceState(null, document.title, `${window.location.pathname}${window.location.search}`);
+    }
+    window.scrollTo(0, 0);
+};
+
+resetOpeningScroll();
+window.addEventListener("pageshow", resetOpeningScroll);
+window.addEventListener("load", () => {
+    resetOpeningScroll();
+    window.setTimeout(resetOpeningScroll, 0);
+});
+
 document.addEventListener("DOMContentLoaded", () => {
+    resetOpeningScroll();
+
     const header = document.getElementById("header");
     const burger = document.getElementById("burger-menu");
     const navMenu = document.getElementById("nav-menu");
@@ -497,7 +520,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", (event) => {
             const targetId = anchor.getAttribute("href");
-            if (!targetId || targetId === "#") return;
+            if (!targetId) return;
+            keepCurrentScroll = true;
+            if (targetId === "#") {
+                event.preventDefault();
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+                closeMobileMenu();
+                return;
+            }
             const target = document.querySelector(targetId);
             if (!target) return;
             event.preventDefault();
