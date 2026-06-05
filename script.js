@@ -259,15 +259,6 @@ document.addEventListener("DOMContentLoaded", () => {
             entry.video.load();
         };
 
-        const getBufferedFraction = (video) => {
-            if (!video.duration || !Number.isFinite(video.duration) || video.duration <= 0) return 0;
-            let bufferedEnd = 0;
-            for (let index = 0; index < video.buffered.length; index += 1) {
-                bufferedEnd = Math.max(bufferedEnd, video.buffered.end(index));
-            }
-            return Math.min(bufferedEnd / video.duration, 1);
-        };
-
         const warmQueue = (entries, index = 0, preload = "metadata") => {
             if (index >= entries.length) return;
             const entry = entries[index];
@@ -302,6 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const getVerticalEntries = () => videoEntries.filter((entry) => entry.card.dataset.videoType === "vertical");
+        const getHorizontalEntries = () => videoEntries.filter((entry) => entry.card.dataset.videoType === "horizontal");
 
         const getActiveVerticalIndex = () => {
             const entries = getVerticalEntries();
@@ -330,51 +322,12 @@ document.addEventListener("DOMContentLoaded", () => {
             warmQueue(entries.slice(index + 1), 0, "metadata");
         };
 
-        const balanceHorizontalPreload = () => {
+        const warmHorizontalVideos = () => {
             if (saveData) return;
-
-            const firstEntry = videoEntries.find((entry) => entry.id === "h1");
-            const secondEntry = videoEntries.find((entry) => entry.id === "h2");
-            if (!firstEntry) return;
-
-            let secondAutoStarted = false;
-            let balancedReleased = false;
-
-            const startSecondAuto = () => {
-                if (!secondEntry || secondAutoStarted) return;
-                secondAutoStarted = true;
-                warmVideo(secondEntry, "auto");
-            };
-
-            const releaseBalancedLoading = () => {
-                if (balancedReleased) return;
-                balancedReleased = true;
-                warmVideo(firstEntry, "auto");
-                if (secondEntry) warmVideo(secondEntry, "auto");
-            };
-
-            const evaluateBuffer = () => {
-                const firstBuffered = getBufferedFraction(firstEntry.video);
-                if (!secondAutoStarted && firstBuffered >= 0.4) startSecondAuto();
-
-                if (!secondEntry || !secondAutoStarted) return;
-                const secondBuffered = getBufferedFraction(secondEntry.video);
-                if (secondBuffered >= 0.25) releaseBalancedLoading();
-            };
-
-            firstEntry.video.addEventListener("loadedmetadata", evaluateBuffer);
-            firstEntry.video.addEventListener("progress", evaluateBuffer);
-            firstEntry.video.addEventListener("timeupdate", evaluateBuffer);
-
-            if (secondEntry) {
-                secondEntry.video.addEventListener("loadedmetadata", evaluateBuffer);
-                secondEntry.video.addEventListener("progress", evaluateBuffer);
-                warmVideo(secondEntry, "metadata");
-            }
-
-            warmVideo(firstEntry, "auto");
-            window.setTimeout(startSecondAuto, slowConnection ? 5200 : 3200);
-            window.setTimeout(releaseBalancedLoading, slowConnection ? 8600 : 6200);
+            const entries = getHorizontalEntries();
+            if (!entries.length) return;
+            warmQueue(entries, 0, "metadata");
+            window.setTimeout(() => warmQueue(entries, 0, "auto"), slowConnection ? 1200 : 360);
         };
 
         const updateVerticalCarousel = () => {
@@ -453,11 +406,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 entries.forEach((observerEntry) => {
                     if (!observerEntry.isIntersecting) return;
                     const videoEntry = videoEntries.find((entry) => entry.card === observerEntry.target);
-                    if (videoEntry?.id === "h2") {
-                        window.setTimeout(() => warmVideo(videoEntry, "metadata"), warmDelay + 650);
-                    } else if (videoEntry) {
-                        warmVideo(videoEntry);
-                    }
+                    if (videoEntry) warmVideo(videoEntry);
                     proximityObserver.unobserve(observerEntry.target);
                 });
             },
@@ -483,14 +432,16 @@ document.addEventListener("DOMContentLoaded", () => {
         window.addEventListener("scroll", pauseHiddenVideos, { passive: true });
         window.addEventListener("resize", pauseHiddenVideos);
 
-        balanceHorizontalPreload();
+        warmHorizontalVideos();
 
         const verticalEntries = getVerticalEntries();
         if (verticalEntries.length) {
             verticalEntries[0].card.classList.add("is-active");
             verticalCarousel?.classList.add("hint");
-            warmVideo(verticalEntries[0], "auto");
-            window.setTimeout(() => warmVerticalAhead(1), warmDelay);
+            window.setTimeout(() => {
+                warmVideo(verticalEntries[0], shouldBackgroundWarm ? "auto" : "metadata");
+                warmVerticalAhead(1);
+            }, shouldBackgroundWarm ? 1800 : 900);
         }
 
         if (verticalScroller && verticalEntries.length) {
