@@ -279,6 +279,19 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         };
 
+        const pauseHiddenVideos = () => {
+            videoEntries.forEach((entry) => {
+                if (entry.video.paused) return;
+                const rect = entry.video.getBoundingClientRect();
+                const isHidden =
+                    rect.bottom <= 0 ||
+                    rect.top >= window.innerHeight ||
+                    rect.right <= 0 ||
+                    rect.left >= window.innerWidth;
+                if (isHidden) entry.video.pause();
+            });
+        };
+
         const getVerticalEntries = () => videoEntries.filter((entry) => entry.card.dataset.videoType === "vertical");
 
         const getActiveVerticalIndex = () => {
@@ -394,6 +407,21 @@ document.addEventListener("DOMContentLoaded", () => {
         videoEntries
             .filter((entry) => entry.card.dataset.videoType !== "vertical")
             .forEach((entry) => proximityObserver.observe(entry.card));
+
+        const viewportObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((observerEntry) => {
+                    if (observerEntry.isIntersecting) return;
+                    const videoEntry = videoEntries.find((entry) => entry.video === observerEntry.target);
+                    if (videoEntry && !videoEntry.video.paused) videoEntry.video.pause();
+                });
+            },
+            { threshold: 0 }
+        );
+
+        videoEntries.forEach((entry) => viewportObserver.observe(entry.video));
+        window.addEventListener("scroll", pauseHiddenVideos, { passive: true });
+        window.addEventListener("resize", pauseHiddenVideos);
 
         const verticalEntries = getVerticalEntries();
         if (verticalEntries.length) {
