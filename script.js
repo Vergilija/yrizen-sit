@@ -397,7 +397,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 entries.forEach((observerEntry) => {
                     if (!observerEntry.isIntersecting) return;
                     const videoEntry = videoEntries.find((entry) => entry.card === observerEntry.target);
-                    if (videoEntry) warmVideo(videoEntry);
+                    if (videoEntry?.id === "h2") {
+                        window.setTimeout(() => warmVideo(videoEntry, "metadata"), warmDelay + 650);
+                    } else if (videoEntry) {
+                        warmVideo(videoEntry);
+                    }
                     proximityObserver.unobserve(observerEntry.target);
                 });
             },
@@ -423,24 +427,22 @@ document.addEventListener("DOMContentLoaded", () => {
         window.addEventListener("scroll", pauseHiddenVideos, { passive: true });
         window.addEventListener("resize", pauseHiddenVideos);
 
+        const firstHorizontalEntry = videoEntries.find((entry) => entry.id === "h1");
+        const secondaryHorizontalEntries = videoEntries.filter(
+            (entry) => entry.card.dataset.videoType === "horizontal" && entry.id !== "h1"
+        );
+
+        if (shouldBackgroundWarm) {
+            if (firstHorizontalEntry) warmVideo(firstHorizontalEntry, "auto");
+            window.setTimeout(() => warmQueue(secondaryHorizontalEntries, 0, "metadata"), 1400);
+        }
+
         const verticalEntries = getVerticalEntries();
         if (verticalEntries.length) {
             verticalEntries[0].card.classList.add("is-active");
             verticalCarousel?.classList.add("hint");
             warmVideo(verticalEntries[0], "auto");
             window.setTimeout(() => warmVerticalAhead(1), warmDelay);
-        }
-
-        if (shouldBackgroundWarm) {
-            const firstHorizontalEntry = videoEntries.find((entry) => entry.id === "h1");
-            const priorityEntries = [
-                ...videoEntries.filter((entry) => entry.card.dataset.videoType === "horizontal")
-            ];
-
-            if (firstHorizontalEntry) {
-                window.setTimeout(() => warmVideo(firstHorizontalEntry, "auto"), 320);
-            }
-            window.setTimeout(() => warmQueue(priorityEntries, 0, "metadata"), 900);
         }
 
         if (verticalScroller && verticalEntries.length) {
