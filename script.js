@@ -438,10 +438,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (verticalEntries.length) {
             verticalEntries[0].card.classList.add("is-active");
             verticalCarousel?.classList.add("hint");
-            window.setTimeout(() => {
-                warmVideo(verticalEntries[0], shouldBackgroundWarm ? "auto" : "metadata");
-                warmVerticalAhead(1);
-            }, shouldBackgroundWarm ? 1800 : 900);
+            warmVideo(verticalEntries[0], shouldBackgroundWarm ? "auto" : "metadata");
+            window.setTimeout(() => warmVerticalAhead(1), warmDelay);
         }
 
         if (verticalScroller && verticalEntries.length) {
