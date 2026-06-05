@@ -259,6 +259,15 @@ document.addEventListener("DOMContentLoaded", () => {
             entry.video.load();
         };
 
+        const getBufferedFraction = (video) => {
+            if (!video.duration || !Number.isFinite(video.duration) || video.duration <= 0) return 0;
+            let bufferedEnd = 0;
+            for (let index = 0; index < video.buffered.length; index += 1) {
+                bufferedEnd = Math.max(bufferedEnd, video.buffered.end(index));
+            }
+            return Math.min(bufferedEnd / video.duration, 1);
+        };
+
         const warmQueue = (entries, index = 0, preload = "metadata") => {
             if (index >= entries.length) return;
             const entry = entries[index];
@@ -319,6 +328,53 @@ document.addEventListener("DOMContentLoaded", () => {
             const nextEntry = entries[index];
             if (nextEntry) warmVideo(nextEntry, "auto");
             warmQueue(entries.slice(index + 1), 0, "metadata");
+        };
+
+        const balanceHorizontalPreload = () => {
+            if (saveData) return;
+
+            const firstEntry = videoEntries.find((entry) => entry.id === "h1");
+            const secondEntry = videoEntries.find((entry) => entry.id === "h2");
+            if (!firstEntry) return;
+
+            let secondAutoStarted = false;
+            let balancedReleased = false;
+
+            const startSecondAuto = () => {
+                if (!secondEntry || secondAutoStarted) return;
+                secondAutoStarted = true;
+                warmVideo(secondEntry, "auto");
+            };
+
+            const releaseBalancedLoading = () => {
+                if (balancedReleased) return;
+                balancedReleased = true;
+                warmVideo(firstEntry, "auto");
+                if (secondEntry) warmVideo(secondEntry, "auto");
+            };
+
+            const evaluateBuffer = () => {
+                const firstBuffered = getBufferedFraction(firstEntry.video);
+                if (!secondAutoStarted && firstBuffered >= 0.4) startSecondAuto();
+
+                if (!secondEntry || !secondAutoStarted) return;
+                const secondBuffered = getBufferedFraction(secondEntry.video);
+                if (secondBuffered >= 0.25) releaseBalancedLoading();
+            };
+
+            firstEntry.video.addEventListener("loadedmetadata", evaluateBuffer);
+            firstEntry.video.addEventListener("progress", evaluateBuffer);
+            firstEntry.video.addEventListener("timeupdate", evaluateBuffer);
+
+            if (secondEntry) {
+                secondEntry.video.addEventListener("loadedmetadata", evaluateBuffer);
+                secondEntry.video.addEventListener("progress", evaluateBuffer);
+                warmVideo(secondEntry, "metadata");
+            }
+
+            warmVideo(firstEntry, "auto");
+            window.setTimeout(startSecondAuto, slowConnection ? 5200 : 3200);
+            window.setTimeout(releaseBalancedLoading, slowConnection ? 8600 : 6200);
         };
 
         const updateVerticalCarousel = () => {
@@ -427,15 +483,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.addEventListener("scroll", pauseHiddenVideos, { passive: true });
         window.addEventListener("resize", pauseHiddenVideos);
 
-        const firstHorizontalEntry = videoEntries.find((entry) => entry.id === "h1");
-        const secondaryHorizontalEntries = videoEntries.filter(
-            (entry) => entry.card.dataset.videoType === "horizontal" && entry.id !== "h1"
-        );
-
-        if (shouldBackgroundWarm) {
-            if (firstHorizontalEntry) warmVideo(firstHorizontalEntry, "auto");
-            window.setTimeout(() => warmQueue(secondaryHorizontalEntries, 0, "metadata"), 1400);
-        }
+        balanceHorizontalPreload();
 
         const verticalEntries = getVerticalEntries();
         if (verticalEntries.length) {
