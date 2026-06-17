@@ -76,14 +76,14 @@ document.addEventListener("DOMContentLoaded", () => {
             switchAria: "Переключить сайт на английский язык",
             menuOpen: "Открыть меню",
             menuClose: "Закрыть меню",
-            documentTitle: "Заказать монтаж видео",
-            metaDescription: "Заказать монтаж видео у Александра: вертикальные и горизонтальные ролики, интервью, путешествия, говорящая голова и монтаж по записи голоса.",
-            metaOgDescription: "Профессиональный монтаж всех видов контента: вертикальные и горизонтальные ролики, интервью, путешествия и говорящая голова.",
+            documentTitle: "YRIZEN — видеомонтаж Reels, Shorts и YouTube",
+            metaDescription: "Портфолио видеомонтажера Александра YRIZEN: монтаж Reels, Shorts, YouTube, интервью, говорящей головы, путешествий и роликов из аудиофайла.",
+            metaOgDescription: "Портфолио видеомонтажера: вертикальные и горизонтальные ролики, интервью, YouTube, путешествия, говорящая голова и монтаж из аудио.",
             navHorizontal: "Горизонтальные",
             navVertical: "Вертикальные",
             navAbout: "Обо мне",
             navContact: "Связаться",
-            heroTitle: "Портфолио",
+            heroTitle: "Портфолио видеомонтажера YRIZEN",
             heroDescription:
                 "Монтирую вертикальные и горизонтальные видео: интервью, путешествия, говорящая голова, экспертные ролики и проекты, где есть только запись голоса.",
             heroButtonOne: "Горизонтальные",
@@ -134,14 +134,14 @@ document.addEventListener("DOMContentLoaded", () => {
             switchAria: "Switch website language to Russian",
             menuOpen: "Open menu",
             menuClose: "Close menu",
-            documentTitle: "Order Video Editing",
-            metaDescription: "Order video editing from Alexander: vertical and horizontal videos, interviews, travel, talking head videos and voice-recording edits.",
-            metaOgDescription: "Professional editing for vertical and horizontal content, interviews, travel and talking head videos.",
+            documentTitle: "YRIZEN — Reels, Shorts and YouTube Video Editing",
+            metaDescription: "Video editing portfolio by Alexander YRIZEN: Reels, Shorts, YouTube videos, interviews, talking head videos, travel and edits from audio.",
+            metaOgDescription: "Video editing portfolio: vertical and horizontal videos, interviews, YouTube, travel, talking head videos and edits from audio.",
             navHorizontal: "Horizontal",
             navVertical: "Vertical",
             navAbout: "About",
             navContact: "Contact",
-            heroTitle: "Portfolio",
+            heroTitle: "YRIZEN video editing portfolio",
             heroDescription:
                 "I edit vertical and horizontal videos: interviews, travel content, talking head videos, expert content, and projects that only have a voice recording.",
             heroButtonOne: "Horizontal",
@@ -208,11 +208,17 @@ document.addEventListener("DOMContentLoaded", () => {
             langSwitch.setAttribute("aria-label", t.switchAria);
         }
 
+        const setMetaContent = (selector, value) => {
+            document.querySelector(selector)?.setAttribute("content", value);
+        };
+
         document.title = t.documentTitle;
-        document.querySelector('meta[name="description"]')?.setAttribute("content", t.metaDescription);
-        document.querySelector('meta[property="og:title"]')?.setAttribute("content", t.documentTitle);
-        document.querySelector('meta[property="og:description"]')?.setAttribute("content", t.metaOgDescription);
-        document.querySelector('meta[property="og:locale"]')?.setAttribute("content", lang === "en" ? "en_US" : "ru_RU");
+        setMetaContent('meta[name="description"]', t.metaDescription);
+        setMetaContent('meta[property="og:title"]', t.documentTitle);
+        setMetaContent('meta[property="og:description"]', t.metaOgDescription);
+        setMetaContent('meta[property="og:locale"]', lang === "en" ? "en_US" : "ru_RU");
+        setMetaContent('meta[name="twitter:title"]', t.documentTitle);
+        setMetaContent('meta[name="twitter:description"]', t.metaOgDescription);
 
         videoCards.forEach((card) => {
             card.querySelector(".video-shell")?.setAttribute("data-unavailable-message", t.videoUnavailable);
